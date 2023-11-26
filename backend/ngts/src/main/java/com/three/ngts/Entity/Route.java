@@ -15,9 +15,9 @@ public class Route {
     @Column(name = "route_id")
     private Long routeId;
 
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
     private List<RouteDistrict> routeDistricts;
 
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
     private List<BusSchedule> busSchedules;
 }

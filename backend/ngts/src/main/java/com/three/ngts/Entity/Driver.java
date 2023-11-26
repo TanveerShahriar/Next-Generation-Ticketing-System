@@ -3,6 +3,8 @@ package com.three.ngts.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 @Entity
 @Table(name = "driver")
@@ -14,10 +16,10 @@ public class Driver {
     private Long driverId;
 
     @Column(name = "driver_license_no")
-    private Long driverLicenseNo;
+    private String driverLicenseNo;
 
     @Column(name = "driver_license_exp")
-    private String driverLicenseExp;
+    private Date driverLicenseExp;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

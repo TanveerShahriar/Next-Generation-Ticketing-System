@@ -18,6 +18,6 @@ public class District {
     @Column(name = "dist_name")
     private String distName;
 
-    @OneToMany(mappedBy = "district")
+    @OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
     private List<RouteDistrict> routeDistricts;
 }

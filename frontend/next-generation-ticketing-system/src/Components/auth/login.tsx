@@ -2,13 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import "./login.css";
 import {Link, useNavigate} from "react-router-dom";
 import {UserToken} from "../../Token/UserToken";
+import UserService from "../../Service/UserService";
+import AuthService from "../../Service/AuthService";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const {authorised, userId,userType} = useContext(UserToken);
+  const {authorised, userId,userType, setAuthorised, setUserId, setUserType} = useContext(UserToken);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -42,7 +44,27 @@ function Login() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Add your login logic here
+    let user = {
+      "email" : email,
+      "password": password
+    };
+
+    UserService.login(user).then((response) => {
+      if (response.data === false){
+        setEmailError("Email or password is incorrect");
+        setPasswordError("Email or password is incorrect");
+      }
+      else{
+        UserService.findUserByEmail(email).then((res) => {
+          let tempUserId = res.data._links.self.href.split("/").pop();
+          setUserId(tempUserId.toString());
+          UserService.findByUser(tempUserId).then((resp) => {
+            setUserType(resp.data._embedded.auths[0].type);
+            setAuthorised("true");
+          });
+        });
+      }
+    });
   };
 
   const validateEmail = (email: string) => {

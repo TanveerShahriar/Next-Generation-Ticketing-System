@@ -24,15 +24,15 @@ public class Bus {
     @Column(name = "bus_capacity")
     private Long busCapacity;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
     private List<Seat> seats;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
     private List<BusSchedule> busSchedules;
 
-    @OneToMany(mappedBy = "bus")
+    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
     private List<BusReview> busReviews;
 }

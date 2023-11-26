@@ -15,11 +15,11 @@ public class RouteDistrict {
     @Column(name = "route_district_id")
     private Long routeDistrictId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
     private Route route;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dist_id")
     private District district;
 

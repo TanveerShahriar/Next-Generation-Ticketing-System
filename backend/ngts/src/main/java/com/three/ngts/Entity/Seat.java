@@ -16,11 +16,11 @@ public class Seat {
     @Column(name = "seat_no")
     private String seatNo;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 }

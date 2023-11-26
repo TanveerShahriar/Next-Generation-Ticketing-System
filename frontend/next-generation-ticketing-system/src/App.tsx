@@ -24,7 +24,7 @@ const router = createBrowserRouter([
 function App() {
 
     const [authorised, setAuthorised] = useState(() => Cookies.get('authorised') || 'false');
-    const [userId, setUserId] = useState(() => Cookies.get('UserId') || "");
+    const [userId, setUserId] = useState(() => Cookies.get('userId') || "");
     const [userType, setUserType] = useState(() => Cookies.get('userType') || "");
 
     useEffect(() => {

@@ -24,30 +24,30 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Name name;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
     private List<Phone> phone;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Auth> auths;
 
-    @OneToOne(mappedBy = "userId")
+    @OneToOne(mappedBy = "userId", fetch = FetchType.LAZY)
     private Driver driver;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     private List<BusSchedule> busSchedules;
 
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
     private List<DriverReview> driverReviewer;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     private List<DriverReview> driverReviews;
 
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
     private List<BusReview> busReviewer;
 }

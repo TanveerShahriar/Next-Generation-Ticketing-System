@@ -19,7 +19,7 @@ public class Name {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }

@@ -18,17 +18,17 @@ public class Ticket {
     @Column(name = "purchase_date")
     private java.sql.Timestamp purchaseDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "refunded")
     private boolean refunded;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY)
     private List<Seat> seats;
 }

@@ -13,9 +13,9 @@ public class Auth {
     @Column(name = "auth_id")
     private Long authId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name = "type")
     private String type;
