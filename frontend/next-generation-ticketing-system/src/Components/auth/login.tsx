@@ -63,10 +63,12 @@ function Login() {
               id="email"
               value={email}
               onChange={handleEmailChange}
-              className="w-full border border-gray-300 rounded px-3 py-2"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  emailError ? "border-red-500" : ""
+              }`}
               placeholder="Enter your email"
             />
-            {emailError && <p className="text-red-500">{emailError}</p>}
+            {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block mb-2 text-white">
@@ -77,16 +79,18 @@ function Login() {
               id="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full border border-gray-300 rounded px-3 py-2"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  passwordError ? "border-red-500" : ""
+              }`}
               placeholder="Enter your password"
             />
-            {passwordError && <p className="text-red-500">{passwordError}</p>}
+            {passwordError && <p className="text-red-500 text-xs italic">{passwordError}</p>}
           </div>
           <div className="flex items-center justify-between">
             <button
               type="submit"
               className={`bg-blue-500 text-white rounded px-4 py-2 ${
-                isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
+                isButtonDisabled ? "bg-gray-500 cursor-not-allowed" : ""
               }`}
               disabled={isButtonDisabled}
             >
