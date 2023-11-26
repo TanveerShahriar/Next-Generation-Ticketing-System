@@ -55,7 +55,7 @@ function Login() {
         <h2 className="text-2xl font-bold mb-4 text-white">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-white">
+            <label htmlFor="email" className="block mb-2 text-white font-bold">
               Email
             </label>
             <input
@@ -71,7 +71,7 @@ function Login() {
             {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block mb-2 text-white">
+            <label htmlFor="password" className="block mb-2 text-white font-bold">
               Password
             </label>
             <input
@@ -89,7 +89,7 @@ function Login() {
           <div className="flex items-center justify-between">
             <button
               type="submit"
-              className={`bg-blue-500 text-white rounded px-4 py-2 ${
+              className={`bg-blue-500 text-white rounded px-4 py-2 font-bold ${
                 isButtonDisabled ? "bg-gray-500 cursor-not-allowed" : ""
               }`}
               disabled={isButtonDisabled}

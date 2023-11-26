@@ -3,15 +3,19 @@ import "./login.css";
 import { Link } from "react-router-dom";
 
 function Signup() {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [secondaryPhone, setSecondaryPhone] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [nameError, setNameError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [secondaryPhoneError, setSecondaryPhoneError] = useState("");
   const [addressError, setAddressError] = useState("");
 
   const handleSignup = () => {
@@ -40,25 +44,36 @@ function Signup() {
 
   const isFormValid = () => {
     return (
-      name.trim() !== "" &&
+      firstName.trim() !== "" &&
+      lastName.trim() !== "" &&
       email.trim() !== "" &&
       phone.trim() !== "" &&
       address.trim() !== "" &&
       password.trim() !== "" &&
       emailError === "" &&
       passwordError === "" &&
-      nameError === "" &&
+      firstNameError === "" &&
+      lastNameError === "" &&
       phoneError === "" &&
       addressError === ""
     );
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value);
     if (e.target.value.trim() === "") {
-      setNameError("Name is required");
+      setFirstNameError("First Name is required");
     } else {
-      setNameError("");
+      setFirstNameError("");
+    }
+  };
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value);
+    if (e.target.value.trim() === "") {
+      setLastNameError("Last Name is required");
+    } else {
+      setLastNameError("");
     }
   };
 
@@ -69,6 +84,13 @@ function Signup() {
     } else {
       setPhoneError("");
     }
+  };
+
+  const handleSecondaryPhoneChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSecondaryPhone(e.target.value);
+    setSecondaryPhoneError("");
   };
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,25 +107,50 @@ function Signup() {
       <div className="w-1/3 bg-black bg-opacity-75 rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4 text-white">Sign Up</h2>
         <div className="mb-4">
-          <label
-            className="block text-white text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            Name
-          </label>
-          <input
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              nameError ? "border-red-500" : ""
-            }`}
-            id="name"
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-            onChange={handleNameChange}
-          />
-          {nameError && (
-            <p className="text-red-500 text-xs italic">{nameError}</p>
-          )}
+          <div className="flex">
+            <div className="mr-2 flex-grow">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="firstName"
+              >
+                First Name
+              </label>
+              <input
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  firstNameError ? "border-red-500" : ""
+                }`}
+                id="firstName"
+                type="text"
+                placeholder="Enter your first name"
+                value={firstName}
+                onChange={handleFirstNameChange}
+              />
+              {firstNameError && (
+                <p className="text-red-500 text-xs italic">{firstNameError}</p>
+              )}
+            </div>
+            <div className="flex-grow">
+              <label
+                className="block text-white text-sm font-bold mb-2"
+                htmlFor="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  lastNameError ? "border-red-500" : ""
+                }`}
+                id="lastName"
+                type="text"
+                placeholder="Enter your last name"
+                value={lastName}
+                onChange={handleLastNameChange}
+              />
+              {lastNameError && (
+                <p className="text-red-500 text-xs italic">{lastNameError}</p>
+              )}
+            </div>
+          </div>
         </div>
         <div className="mb-4">
           <label
@@ -148,6 +195,27 @@ function Signup() {
           />
           {phoneError && (
             <p className="text-red-500 text-xs italic">{phoneError}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-white text-sm font-bold mb-2"
+            htmlFor="secondaryPhone"
+          >
+            Secondary Phone <span className="text-green-400">(Optional)</span>
+          </label>
+          <input
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+              secondaryPhoneError ? "border-red-500" : ""
+            }`}
+            id="secondaryPhone"
+            type="text"
+            placeholder="Enter your secondary phone number"
+            value={secondaryPhone}
+            onChange={handleSecondaryPhoneChange}
+          />
+          {secondaryPhoneError && (
+            <p className="text-red-500 text-xs italic">{secondaryPhoneError}</p>
           )}
         </div>
         <div className="mb-4">
@@ -198,7 +266,9 @@ function Signup() {
         <div className="flex items-center justify-between">
           <button
             className={`${
-              isFormValid() ? "bg-blue-500 hover:bg-blue-700" : "bg-gray-500 cursor-not-allowed"
+              isFormValid()
+                ? "bg-blue-500 hover:bg-blue-700"
+                : "bg-gray-500 cursor-not-allowed"
             } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
             type="button"
             onClick={handleSignup}

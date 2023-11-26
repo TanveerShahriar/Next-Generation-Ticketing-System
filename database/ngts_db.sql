@@ -8,12 +8,27 @@ ALTER DATABASE ngts_db CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
   `email` varchar(320) NOT NULL,
-  `password` char(68) NOT NULL,
-  `phone` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `address` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `name` (
+  `name_id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `user_id` int NOT NULL UNIQUE,
+  PRIMARY KEY (`name_id`),
+  CONSTRAINT `FK_NAME_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `phone` (
+  `phone_id` int NOT NULL AUTO_INCREMENT,
+  `phone_number` varchar(45) NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`phone_id`),
+  CONSTRAINT `FK_PHONE_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `auth` (
@@ -37,6 +52,7 @@ CREATE TABLE `bus` (
   `bus_id` int NOT NULL AUTO_INCREMENT,
   `bus_no` varchar(512) NOT NULL,
   `bus_type` varchar(64) NOT NULL,
+  `bus_capacity` int NOT NULL,
   PRIMARY KEY (`bus_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
@@ -55,7 +71,7 @@ CREATE TABLE `seat` (
   `seat_id` int NOT NULL AUTO_INCREMENT,
   `seat_no` varchar(45) NOT NULL,
   `bus_id` int NOT NULL,
-  `ticket_id` int NOT NULL,
+  `ticket_id` int DEFAULT NULL,
   PRIMARY KEY (`seat_id`),
   CONSTRAINT `FK_SEAT_1` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id`),
   CONSTRAINT `FK_SEAT_2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`)
