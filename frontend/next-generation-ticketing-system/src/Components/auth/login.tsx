@@ -52,7 +52,9 @@ function Login() {
     UserService.login(user).then((response) => {
       if (response.data === false){
         setEmailError("Email or password is incorrect");
+        setEmail("");
         setPasswordError("Email or password is incorrect");
+        setPassword("");
       }
       else{
         UserService.findUserByEmail(email).then((res) => {
