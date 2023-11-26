@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {UserToken} from "../../Token/UserToken";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const {authorised, userId,userType} = useContext(UserToken);
+
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (authorised === "true") {
+      navigate("/home");
+    }
+  }, [authorised]);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;

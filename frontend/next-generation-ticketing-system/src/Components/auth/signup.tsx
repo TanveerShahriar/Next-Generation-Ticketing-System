@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {UserToken} from "../../Token/UserToken";
 
 function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -17,6 +18,14 @@ function Signup() {
   const [phoneError, setPhoneError] = useState("");
   const [secondaryPhoneError, setSecondaryPhoneError] = useState("");
   const [addressError, setAddressError] = useState("");
+  const {authorised, userId,userType} = useContext(UserToken);
+
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (authorised === "true") {
+      navigate("/home");
+    }
+  }, [authorised]);
 
   const handleSignup = () => {
     // Handle signup logic here
