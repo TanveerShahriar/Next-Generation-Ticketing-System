@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./homepage.css";
 
 function Homepage() {
-  const { authorised, userId, userType } = useContext(UserToken);
   const [districts, setDistricts] = useState([
     "Dhaka",
     "Chittagong",
@@ -16,6 +15,7 @@ function Homepage() {
     "Mymensingh",
   ]);
 
+  const { authorised, userId, userType } = useContext(UserToken);
   let navigate = useNavigate();
   useEffect(() => {
     if (authorised === "false") {

@@ -7,6 +7,8 @@ import Signup from "./Components/auth/signup";
 import {UserToken} from "./Token/UserToken";
 import Homepage from "./Components/Homepage/Homepage";
 import Cookies from "js-cookie";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
+import AddBus from "./Components/AdminPanel/AddBus";
 
 const router = createBrowserRouter([
     {
@@ -15,8 +17,11 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <Homepage/> },
             { path: "/home", element: <Homepage/> },
+            { path: "/homepage", element: <Homepage/> },
             { path: "/login", element: <Login/> },
             { path: "/signup", element: <Signup/> },
+            { path: "/admin", element: <AdminPanel/> },
+            { path: "/addBus", element: <AddBus/> },
         ],
     },
 ]);
