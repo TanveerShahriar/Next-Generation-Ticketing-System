@@ -19,18 +19,38 @@ function AdminPanel() {
   const handleAddNewBus = () => {
     navigate("/addBus");
   };
+  const handleAddNewRoute = () => {
+    navigate("/addRoute");
+  };
+
+    const handleAddNewSchedule = () => {
+        navigate("/addSchedule");
+    };
 
   return (
     <div className="flex justify-center items-center h-screen background_image_admin">
       <div
-        id="base"
-        className="bg-white bg-opacity-25 rounded-lg p-6 justify-center"
+        className="bg-white bg-opacity-25 rounded-lg p-6"
       >
         <button
-          className="flex-grow block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
+          className="w-full block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
           onClick={handleAddNewBus}
         >
           Add new Bus
+        </button>
+
+        <button
+          className="mt-2 w-full block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
+          onClick={handleAddNewRoute}
+        >
+          Add new Route
+        </button>
+
+        <button
+          className="mt-2 w-full block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
+          onClick={handleAddNewSchedule}
+        >
+          Add new Schedule
         </button>
       </div>
     </div>

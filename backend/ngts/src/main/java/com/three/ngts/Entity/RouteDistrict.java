@@ -25,10 +25,4 @@ public class RouteDistrict {
 
     @Column(name = "dist_order")
     private Long distOrder;
-
-    @Column(name = "fare")
-    private BigDecimal fare;
-
-    @Column(name = "distance")
-    private BigDecimal distance;
 }

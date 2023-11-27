@@ -93,8 +93,6 @@ CREATE TABLE `route_district` (
   `route_id` int NOT NULL,
   `dist_id` int NOT NULL,
   `dist_order` int NOT NULL,
-  `fare` decimal(10,2) NOT NULL,
-  `distance` decimal(10,2) NOT NULL,
   PRIMARY KEY (`route_district_id`),
   CONSTRAINT `FK_ROUTE_DISTRICT_1` FOREIGN KEY (`route_id`) REFERENCES `route` (`route_id`),
   CONSTRAINT `FK_ROUTE_DISTRICT_2` FOREIGN KEY (`dist_id`) REFERENCES `district` (`dist_id`)

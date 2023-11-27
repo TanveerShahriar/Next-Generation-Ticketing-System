@@ -9,6 +9,8 @@ import Homepage from "./Components/Homepage/Homepage";
 import Cookies from "js-cookie";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import AddBus from "./Components/AdminPanel/AddBus";
+import AddRoute from "./Components/AdminPanel/AddRoute";
+import AddSchedule from "./Components/AdminPanel/AddSchedule";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
             { path: "/signup", element: <Signup/> },
             { path: "/admin", element: <AdminPanel/> },
             { path: "/addBus", element: <AddBus/> },
+            { path: "/addRoute", element: <AddRoute/> },
+            { path: "/addSchedule", element: <AddSchedule/> }
         ],
     },
 ]);
