@@ -37,7 +37,7 @@ public class NameService {
     }
 
     @PostMapping("/names/getFreeDriver")
-    public List<Name> getFreeDriver(BusSchedule busScheduleProp){
+    public List<Name> getFreeDriver(@RequestBody BusSchedule busScheduleProp){
         List<User> allUsers = userRepo.findAll();
         List<Name> freeDriver = new ArrayList<Name>();
 

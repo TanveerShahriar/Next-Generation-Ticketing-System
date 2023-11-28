@@ -100,7 +100,7 @@ CREATE TABLE `route_district` (
 
 CREATE TABLE `bus_schedule` (
   `schedule_id` int NOT NULL AUTO_INCREMENT,
-  `bus_id` int NOT NULL UNIQUE,
+  `bus_id` int NOT NULL,
   `route_id` int NOT NULL,
   `departure_time` datetime NOT NULL,
   `arrival_time` datetime NOT NULL,

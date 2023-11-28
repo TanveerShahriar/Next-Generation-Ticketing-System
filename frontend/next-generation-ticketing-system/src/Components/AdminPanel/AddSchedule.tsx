@@ -12,9 +12,9 @@ import RouteShower from "../../Entity/CustomEntity/RouteShower";
 import NameService from "../../Service/NameService";
 import Name from "../../Entity/Name";
 import User from "../../Entity/User";
+import BusScheduleService from "../../Service/BusScheduleService";
 
 function AddSchedule() {
-  const [districts, setDistricts] = useState<District[]>([]);
   const [buses, setBuses] = useState<Bus[]>([]);
   const [departureTimeObj, setDepartureTimeObj] = useState<Date>();
   const [arrivalTimeObj, setArrivalTimeObj] = useState<Date>();
@@ -22,6 +22,11 @@ function AddSchedule() {
   const [arrivalTime, setArrivalTime] = useState("");
   const [routeShowerList, setRouteShowerList] = useState<RouteShower[]>([]);
   const [freeDrivers, setFreeDrivers] = useState<Name[]>([]);
+  const [selectedBus, setSelectedBus] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState("");
+  const [selectedDriver, setSelectedDriver] = useState("");
+  const [errorMessages, setErrorMessages] = useState<string>("");
+  const [successMessages, setSuccessMessages] = useState<string>("");
 
   const { authorised, userId, userType } = useContext(UserToken);
   let navigate = useNavigate();
@@ -32,7 +37,7 @@ function AddSchedule() {
   }, [authorised]);
 
   useEffect(() => {
-    if(departureTimeObj && arrivalTimeObj) {
+    if (departureTimeObj && arrivalTimeObj) {
       let tempBusSchedule = {
         departureTime: departureTimeObj,
         arrivalTime: arrivalTimeObj,
@@ -51,6 +56,8 @@ function AddSchedule() {
         }
         setBuses(tempBuses);
       });
+    } else {
+      setBuses([]);
     }
   }, [departureTimeObj, arrivalTimeObj]);
 
@@ -58,38 +65,54 @@ function AddSchedule() {
     RouteDistrictService.getAll().then((res) => {
       let tempRouteDistrictList: RouteDistrict[] = [];
       for (let i = 0; i < res.data.length; i++) {
-        tempRouteDistrictList.push(new RouteDistrict(
+        tempRouteDistrictList.push(
+          new RouteDistrict(
             res.data[i].routeDistrictId,
             new route(res.data[i].route.routeId),
-            new District(res.data[i].district.distId, res.data[i].district.distName),
-            res.data[i].distOrder)
+            new District(
+              res.data[i].district.distId,
+              res.data[i].district.distName
+            ),
+            res.data[i].distOrder
+          )
         );
       }
 
       let tempRouteShowers: RouteShower[] = [];
-        for (let i = 0; i < tempRouteDistrictList.length; i++) {
-            let routeAvailable = false;
-            for(let j = 0 ; j<tempRouteShowers.length; j++) {
-              if (tempRouteDistrictList[i].route.routeId === tempRouteShowers[j].routeId){
-                tempRouteShowers[j].districts.splice(tempRouteDistrictList[i].distOrder,0,tempRouteDistrictList[i].district.distName);
-                routeAvailable = true;
-                break;
-              }
-            }
-            if (!routeAvailable){
-              let tempList: string[] = [];
-              tempList.splice(tempRouteDistrictList[i].distOrder, 0, tempRouteDistrictList[i].district.distName)
-              tempRouteShowers.push(
-                  new RouteShower(tempRouteDistrictList[i].route.routeId, tempList)
-              );
-            }
+      for (let i = 0; i < tempRouteDistrictList.length; i++) {
+        let routeAvailable = false;
+        for (let j = 0; j < tempRouteShowers.length; j++) {
+          if (
+            tempRouteDistrictList[i].route.routeId ===
+            tempRouteShowers[j].routeId
+          ) {
+            tempRouteShowers[j].districts.splice(
+              tempRouteDistrictList[i].distOrder,
+              0,
+              tempRouteDistrictList[i].district.distName
+            );
+            routeAvailable = true;
+            break;
+          }
         }
-        setRouteShowerList(tempRouteShowers);
+        if (!routeAvailable) {
+          let tempList: string[] = [];
+          tempList.splice(
+            tempRouteDistrictList[i].distOrder,
+            0,
+            tempRouteDistrictList[i].district.distName
+          );
+          tempRouteShowers.push(
+            new RouteShower(tempRouteDistrictList[i].route.routeId, tempList)
+          );
+        }
+      }
+      setRouteShowerList(tempRouteShowers);
     });
   }, []);
 
   useEffect(() => {
-    if(departureTimeObj && arrivalTimeObj) {
+    if (departureTimeObj && arrivalTimeObj) {
       let tempBusSchedule = {
         departureTime: departureTimeObj,
         arrivalTime: arrivalTimeObj,
@@ -98,11 +121,23 @@ function AddSchedule() {
         let tempFreeDrivers: Name[] = [];
         for (let i = 0; i < res.data.length; i++) {
           tempFreeDrivers.push(
-              new Name(res.data[i].nameId, res.data[i].firstName, res.data[i].lastName, new User(res.data[i].user.userId, res.data[i].user.email, res.data[i].user.address, res.data[i].user.password))
+            new Name(
+              res.data[i].nameId,
+              res.data[i].firstName,
+              res.data[i].lastName,
+              new User(
+                res.data[i].user.userId,
+                res.data[i].user.email,
+                res.data[i].user.address,
+                res.data[i].user.password
+              )
+            )
           );
         }
         setFreeDrivers(tempFreeDrivers);
       });
+    } else {
+      setFreeDrivers([]);
     }
   }, [departureTimeObj, arrivalTimeObj]);
 
@@ -111,19 +146,62 @@ function AddSchedule() {
   ) => {
     setDepartureTime(e.target.value);
     setDepartureTimeObj(new Date(e.target.value));
+    setErrorMessages("");
   };
 
   const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setArrivalTime(e.target.value);
     setArrivalTimeObj(new Date(e.target.value));
+    setErrorMessages("");
+  };
+
+  const handleBusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBus(e.target.value);
+    setErrorMessages("");
+  };
+
+  const handleRouteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedRoute(e.target.value);
+    setErrorMessages("");
+  };
+
+  const handleDriverChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDriver(e.target.value);
+    setErrorMessages("");
   };
 
   const submitClickHandler = () => {
+    if (
+      selectedBus === "" ||
+      selectedRoute === "" ||
+      selectedDriver === "" ||
+      departureTime === "" ||
+      arrivalTime === ""
+    ) {
+      setErrorMessages("Please fill all the fields");
+      return;
+    }
+    if (departureTimeObj && arrivalTimeObj) {
+      if (departureTimeObj >= arrivalTimeObj) {
+        setErrorMessages("Arrival time must be after departure time");
+        return;
+      }
+    }
     let tempBusSchedule = {
-      // bus:
+      bus: buses[Number(selectedBus)],
+      route: new route(Number(selectedRoute)),
       departureTime: departureTimeObj,
       arrivalTime: arrivalTimeObj,
+      driver: freeDrivers[Number(selectedDriver)].user,
     };
+    BusScheduleService.insert(tempBusSchedule).then((res) => {
+      setSuccessMessages("Schedule added successfully");
+      setDepartureTime("");
+      setArrivalTime("");
+      setSelectedBus("");
+      setSelectedRoute("");
+      setSelectedDriver("");
+    });
   };
 
   return (
@@ -145,42 +223,56 @@ function AddSchedule() {
           onChange={handleArrivalTimeChange}
         />
         <select
-          aria-label="source"
+          aria-label="bus"
           className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+          value={selectedBus}
+          onChange={handleBusChange}
         >
           <option className="selected">Select Bus</option>
-          {buses.map((bus) => (
-            <option key={bus.busId} value={bus.busId}>
+          {buses.map((bus, index) => (
+            <option key={bus.busId} value={index}>
               {bus.busNo} - [{bus.busType}] - {bus.busCapacity}
             </option>
           ))}
         </select>
         <select
-          aria-label="dest"
+          aria-label="route"
           className="mt-2 w-96 block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+          value={selectedRoute}
+          onChange={handleRouteChange}
         >
           <option className="selected">Select Route</option>
           {routeShowerList.map((specificRoute, index) => (
-              <option key={index} value={specificRoute.routeId}>
-                {specificRoute.districts.join(' -> ')}
-              </option>
+            <option key={index} value={specificRoute.routeId}>
+              {specificRoute.districts.join(" -> ")}
+            </option>
           ))}
-
         </select>
         <select
-          aria-label="bus"
+          aria-label="driver"
           className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+          value={selectedDriver}
+          onChange={handleDriverChange}
         >
           <option className="selected">Select Driver</option>
           {freeDrivers.map((freeDriver, index) => (
-            <option key={index} value={freeDriver.user.userId}>
+            <option key={index} value={index}>
               {freeDriver.firstName} {freeDriver.lastName}
             </option>
           ))}
         </select>
-        <button className="mt-2 w-full block bg-white hover:bg-green-100 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold" onClick={submitClickHandler}>
+        <button
+          className="mt-2 w-full block bg-white hover:bg-green-100 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+          onClick={submitClickHandler}
+        >
           Add Schedule
         </button>
+        {errorMessages && (
+          <p className="text-red-500 text-center">{errorMessages}</p>
+        )}
+        {successMessages && (
+          <p className="text-green-500 text-center">{successMessages}</p>
+        )}
       </div>
     </div>
   );
