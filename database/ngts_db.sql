@@ -56,27 +56,6 @@ CREATE TABLE `bus` (
   PRIMARY KEY (`bus_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
-CREATE TABLE `ticket` (
-  `ticket_id` int NOT NULL AUTO_INCREMENT,
-  `purchase_date` datetime NOT NULL,
-  `bus_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `refunded` tinyint(1) NOT NULL,
-  PRIMARY KEY (`ticket_id`),
-  CONSTRAINT `FK_TICKET_1` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id`),
-  CONSTRAINT `FK_TICKET_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-CREATE TABLE `seat` (
-  `seat_id` int NOT NULL AUTO_INCREMENT,
-  `seat_no` varchar(45) NOT NULL,
-  `bus_id` int NOT NULL,
-  `ticket_id` int DEFAULT NULL,
-  PRIMARY KEY (`seat_id`),
-  CONSTRAINT `FK_SEAT_1` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id`),
-  CONSTRAINT `FK_SEAT_2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
 CREATE TABLE `district` (
   `dist_id` int NOT NULL AUTO_INCREMENT,
   `dist_name` varchar(45) NOT NULL,
@@ -109,6 +88,27 @@ CREATE TABLE `bus_schedule` (
   CONSTRAINT `FK_BUS_SCHEDULE_1` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id`),
   CONSTRAINT `FK_BUS_SCHEDULE_2` FOREIGN KEY (`route_id`) REFERENCES `route` (`route_id`),
   CONSTRAINT `FK_BUS_SCHEDULE_3` FOREIGN KEY (`driver_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `ticket` (
+  `ticket_id` int NOT NULL AUTO_INCREMENT,
+  `purchase_date` datetime NOT NULL,
+  `schedule_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `refunded` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ticket_id`),
+  CONSTRAINT `FK_TICKET_1` FOREIGN KEY (`schedule_id`) REFERENCES `bus_schedule` (`schedule_id`),
+  CONSTRAINT `FK_TICKET_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `seat` (
+  `seat_id` int NOT NULL AUTO_INCREMENT,
+  `seat_no` varchar(45) NOT NULL,
+  `schedule_id` int NOT NULL,
+  `ticket_id` int DEFAULT NULL,
+  PRIMARY KEY (`seat_id`),
+  CONSTRAINT `FK_SEAT_1` FOREIGN KEY (`schedule_id`) REFERENCES `bus_schedule` (`schedule_id`),
+  CONSTRAINT `FK_SEAT_2` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `driver_review` (

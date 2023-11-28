@@ -144,30 +144,37 @@ function AddSchedule() {
   const handleDepartureTimeChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setErrorMessages("");
+    setSuccessMessages("");
+    setBuses([]);
     setDepartureTime(e.target.value);
     setDepartureTimeObj(new Date(e.target.value));
-    setErrorMessages("");
   };
 
   const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessages("");
+    setSuccessMessages("");
+    setBuses([]);
     setArrivalTime(e.target.value);
     setArrivalTimeObj(new Date(e.target.value));
-    setErrorMessages("");
   };
 
   const handleBusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBus(e.target.value);
     setErrorMessages("");
+    setSuccessMessages("");
   };
 
   const handleRouteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRoute(e.target.value);
     setErrorMessages("");
+    setSuccessMessages("");
   };
 
   const handleDriverChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDriver(e.target.value);
     setErrorMessages("");
+    setSuccessMessages("");
   };
 
   const submitClickHandler = () => {
@@ -196,6 +203,7 @@ function AddSchedule() {
     };
     BusScheduleService.insert(tempBusSchedule).then((res) => {
       setSuccessMessages("Schedule added successfully");
+      setErrorMessages("");
       setDepartureTime("");
       setArrivalTime("");
       setSelectedBus("");
@@ -270,7 +278,7 @@ function AddSchedule() {
         {errorMessages && (
           <p className="text-red-500 text-center">{errorMessages}</p>
         )}
-        {successMessages && (
+        {successMessages && !errorMessages &&(
           <p className="text-green-500 text-center">{successMessages}</p>
         )}
       </div>

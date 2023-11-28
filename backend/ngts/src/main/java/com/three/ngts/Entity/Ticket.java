@@ -20,8 +20,8 @@ public class Ticket {
     private java.sql.Timestamp purchaseDate;
 
     @ManyToOne
-    @JoinColumn(name = "bus_id")
-    private Bus bus;
+    @JoinColumn(name = "schedule_id")
+    private BusSchedule busSchedule;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

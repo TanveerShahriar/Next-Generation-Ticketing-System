@@ -1,7 +1,10 @@
 package com.three.ngts.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -30,4 +33,12 @@ public class BusSchedule {
     @ManyToOne
     @JoinColumn(name = "driver_id")
     private User driver;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "busSchedule")
+    private List<Ticket> tickets;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "busSchedule")
+    private List<Seat> seats;
 }

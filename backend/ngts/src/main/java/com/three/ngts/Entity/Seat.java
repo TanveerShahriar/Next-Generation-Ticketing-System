@@ -17,8 +17,8 @@ public class Seat {
     private String seatNo;
 
     @ManyToOne
-    @JoinColumn(name = "bus_id")
-    private Bus bus;
+    @JoinColumn(name = "schedule_id")
+    private BusSchedule busSchedule;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")

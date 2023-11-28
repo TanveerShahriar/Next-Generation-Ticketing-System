@@ -27,14 +27,6 @@ public class Bus {
 
     @JsonIgnore
     @OneToMany(mappedBy = "bus")
-    private List<Ticket> tickets;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "bus")
-    private List<Seat> seats;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "bus")
     private List<BusSchedule> busSchedules;
 
     @JsonIgnore
