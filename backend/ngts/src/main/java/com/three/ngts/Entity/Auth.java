@@ -13,7 +13,7 @@ public class Auth {
     @Column(name = "auth_id")
     private Long authId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

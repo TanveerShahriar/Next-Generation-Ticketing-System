@@ -2,6 +2,7 @@ package com.three.ngts.Entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,9 +16,11 @@ public class Route {
     @Column(name = "route_id")
     private Long routeId;
 
-    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "route")
     private List<RouteDistrict> routeDistricts;
 
-    @OneToMany(mappedBy = "route", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "route")
     private List<BusSchedule> busSchedules;
 }

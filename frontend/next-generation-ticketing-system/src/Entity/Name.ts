@@ -1,10 +1,12 @@
+import User from "./User";
+
 class Name {
     nameId: number;
     firstName: string;
     lastName: string;
-    user: number;
+    user: User;
 
-    constructor(nameId: number, firstName: string, lastName: string, user: number) {
+    constructor(nameId: number, firstName: string, lastName: string, user: User){
         this.nameId = nameId;
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,5 +1,6 @@
 package com.three.ngts.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,30 +25,39 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
     private Name name;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "userId")
     private List<Phone> phone;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<Auth> auths;
 
-    @OneToOne(mappedBy = "userId", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToOne(mappedBy = "userId")
     private Driver driver;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "driver")
     private List<BusSchedule> busSchedules;
 
-    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "reviewer")
     private List<DriverReview> driverReviewer;
 
-    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "driver")
     private List<DriverReview> driverReviews;
 
-    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "reviewer")
     private List<BusReview> busReviewer;
 }

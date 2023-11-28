@@ -24,11 +24,11 @@ public class DriverReview {
     @Column(name = "review_date")
     private java.sql.Timestamp reviewDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private User driver;
 }

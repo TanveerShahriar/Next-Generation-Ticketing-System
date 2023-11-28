@@ -86,6 +86,13 @@ function Signup() {
                 "user": response.data
               }
               NameService.insert(name).then((response_name) => {
+                if(secondaryPhone !== "") {
+                  let phoneTwo = {
+                    "phoneNumber": secondaryPhone,
+                    "userId": response.data
+                  }
+                  PhoneService.insert(phoneTwo).then();
+                }
                 if (user_type === UserType.BusDriver){
                     let driver = {
                         "driverLicenseNo": driverLicenseNumber,
@@ -107,14 +114,6 @@ function Signup() {
               });
             });
           });
-
-          if(secondaryPhone !== "") {
-            let phoneTwo = {
-              "phoneNumber": secondaryPhone,
-              "userId": response.data
-            }
-            PhoneService.insert(phoneTwo).then();
-          }
         });
 
       }

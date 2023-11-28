@@ -1,5 +1,6 @@
 package com.three.ngts.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class District {
     @Column(name = "dist_name")
     private String distName;
 
-    @OneToMany(mappedBy = "district", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "district")
     private List<RouteDistrict> routeDistricts;
 }

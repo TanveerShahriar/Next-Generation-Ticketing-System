@@ -24,11 +24,11 @@ public class BusReview {
     @Column(name = "review_date")
     private java.sql.Timestamp reviewDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "bus_id")
     private Bus bus;
 }

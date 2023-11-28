@@ -1,5 +1,6 @@
 package com.three.ngts.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,15 +25,19 @@ public class Bus {
     @Column(name = "bus_capacity")
     private Long busCapacity;
 
-    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "bus")
     private List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "bus")
     private List<Seat> seats;
 
-    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "bus")
     private List<BusSchedule> busSchedules;
 
-    @OneToMany(mappedBy = "bus", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "bus")
     private List<BusReview> busReviews;
 }

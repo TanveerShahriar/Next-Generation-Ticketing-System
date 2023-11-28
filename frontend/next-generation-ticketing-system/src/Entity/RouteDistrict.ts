@@ -1,13 +1,13 @@
 import Route from "./Route";
-import district from "./District";
+import District from "./District";
 
 class RouteDistrict{
     routeDistrictId: number;
     route: Route;
-    district: district;
+    district: District;
     distOrder: number;
 
-    constructor(routeDistrictId: number, route: Route, district: district, distOrder: number) {
+    constructor(routeDistrictId: number, route: Route, district: District, distOrder: number) {
         this.routeDistrictId = routeDistrictId;
         this.route = route;
         this.district = district;

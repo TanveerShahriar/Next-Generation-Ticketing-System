@@ -1,7 +1,6 @@
 package com.three.ngts.Entity;
 
-import java.math.BigDecimal;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,11 +14,11 @@ public class RouteDistrict {
     @Column(name = "route_district_id")
     private Long routeDistrictId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "route_id")
     private Route route;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "dist_id")
     private District district;
 

@@ -2,6 +2,7 @@ package com.three.ngts.Entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,17 +19,18 @@ public class Ticket {
     @Column(name = "purchase_date")
     private java.sql.Timestamp purchaseDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "refunded")
     private boolean refunded;
 
-    @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "ticket")
     private List<Seat> seats;
 }

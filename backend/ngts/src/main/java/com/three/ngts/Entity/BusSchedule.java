@@ -13,11 +13,11 @@ public class BusSchedule {
     @Column(name = "schedule_id")
     private Long scheduleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "route_id")
     private Route route;
 
@@ -27,7 +27,7 @@ public class BusSchedule {
     @Column(name = "arrival_time")
     private java.sql.Timestamp arrivalTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private User driver;
 }

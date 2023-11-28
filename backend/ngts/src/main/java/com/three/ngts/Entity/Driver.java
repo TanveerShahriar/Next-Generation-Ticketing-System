@@ -21,7 +21,7 @@ public class Driver {
     @Column(name = "driver_license_exp")
     private Date driverLicenseExp;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User userId;
 }

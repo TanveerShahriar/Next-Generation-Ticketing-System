@@ -7,7 +7,6 @@ import District from "../../Entity/District";
 import RouteService from "../../Service/RouteService";
 import route from "../../Entity/Route";
 import RouteDistrictService from "../../Service/RouteDistrictService";
-import routeDistrict from "../../Entity/RouteDistrict";
 import RouteDistrict from "../../Entity/RouteDistrict";
 
 function AddRoute() {
@@ -108,7 +107,7 @@ function AddRoute() {
     <div className="flex justify-center h-fit  background_image_admin">
       <div className="w-1/3 bg-black bg-opacity-75 rounded-lg p-6 h-auto">
         {routeList.map((routeElement) => (
-          <div className="font-bold mt-4">
+          <div key={routeElement.routeDistrictId} className="font-bold mt-4">
             <label className="text-white pe-2">
               Bus Stop {routeElement.distOrder}:{" "}
               {routeElement.district.distName}
