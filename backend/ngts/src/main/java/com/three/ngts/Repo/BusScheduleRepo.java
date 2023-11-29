@@ -12,8 +12,7 @@ import java.util.List;
 @Repository
 @CrossOrigin(origins = "http://localhost:3000")
 public interface BusScheduleRepo extends JpaRepository<BusSchedule, Long> {
+    BusSchedule findBusScheduleByScheduleId(long id);
     List<BusSchedule> findBusSchedulesByDriver(User user);
-
-//    List<BusSchedule> findBusSchedulesByDepartureTimeAfter(Timestamp timestamp);
     List<BusSchedule> findBusSchedulesByDepartureTimeAfterAndDepartureTimeBefore(Timestamp timestamp1, Timestamp timestamp2);
 }

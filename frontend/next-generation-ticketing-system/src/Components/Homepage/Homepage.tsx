@@ -70,7 +70,7 @@ function Homepage() {
       timestamp: new Date(selectedDate),
     };
     setTwoDistrict(tempTwoDistrict);
-    ScheduleCardService.getScheduleCard(tempTwoDistrict).then((res) => {
+    ScheduleCardService.getScheduleCards(tempTwoDistrict).then((res) => {
       let tempScheduleCard: ScheduleCard[] = res.data;
       setScheduleCards(tempScheduleCard);
     });
@@ -197,7 +197,7 @@ function Homepage() {
           </div>
         </div>
           {scheduleCards.map((scheduleCard) => (
-              <Link to='/home' key={scheduleCard.busSchedule.scheduleId} className={`p-1 block justify-center mt-10 border ${freeSeats(scheduleCard.seats)==0 ? "border-red-300 bg-red-200 pointer-events-none" : "border-blue-300 hover:border-blue-600 bg-blue-200 hover:bg-blue-300"} bg-opacity-75 rounded hover:bg-opacity-70`}>
+              <Link to={{ pathname: '/buyTicket', search: `?data=${encodeURIComponent(JSON.stringify({"twoDistrict": twoDistrict, "scheduleId": scheduleCard.busSchedule.scheduleId}))}` }} key={scheduleCard.busSchedule.scheduleId} className={`p-1 block justify-center mt-10 border ${freeSeats(scheduleCard.seats)==0 ? "border-red-300 bg-red-200 pointer-events-none" : "border-blue-300 hover:border-blue-600 bg-blue-200 hover:bg-blue-300"} bg-opacity-75 rounded hover:bg-opacity-70`}>
                 <div className="flex justify-between">
                   <div className="font-bold text-xl">
                     Bus Number: {scheduleCard.busSchedule.bus.busNo} [{scheduleCard.busSchedule.bus.busType}]

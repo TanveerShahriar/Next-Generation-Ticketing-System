@@ -8,11 +8,8 @@ function AddBus() {
   const { authorised, userId, userType } = useContext(UserToken);
   const [busNumber, setBusNumber] = useState("");
   const [busType, setBusType] = useState("");
-  const [totalSeats, setTotalSeats] = useState("4");
-  const [error, setError] = useState("");
   const [busNumberError, setBusNumberError] = useState("");
   const [busTypeError, setBusTypeError] = useState("");
-  const [seatError, setSeatError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
   let navigate = useNavigate();
@@ -46,22 +43,6 @@ function AddBus() {
     }
   };
 
-  const handleTotalSeatsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSuccessMsg("");
-    const seats = parseInt(e.target.value);
-    if (seats > 44 || seats < 4) {
-      setError("Total seats must be between 4 and 44");
-    } else {
-      setError("");
-      setTotalSeats(e.target.value);
-    }
-    if (e.target.value === "") {
-      setSeatError("Seat is required");
-    } else {
-      setSeatError("");
-    }
-  };
-
   const handleAddBus = () => {
     BusService.findByBusNo(busNumber).then((res) => {
       if(res.data._embedded.buses.length > 0) {
@@ -70,12 +51,11 @@ function AddBus() {
         const bus = {
           busNo: busNumber,
           busType: busType,
-          busCapacity: totalSeats,
+          busCapacity: 40,
         };
         BusService.insert(bus).then((res) => {
           setBusNumber("");
             setBusType("");
-            setTotalSeats("");
             setSuccessMsg("Bus Added Successfully!");
         });
       }
@@ -84,13 +64,10 @@ function AddBus() {
 
   function isButtonDisabled() {
     return !!(
-      error ||
       busNumberError ||
       busTypeError ||
-      seatError ||
       busNumber === "" ||
-      busType === "" ||
-      totalSeats === ""
+      busType === ""
     );
   }
 
@@ -117,15 +94,6 @@ function AddBus() {
             <option value="Non-AC">Non-AC</option>
           </select>
           {busTypeError && <p className="text-red-500">{busTypeError}</p>}
-          <input
-            type="number"
-            placeholder="Total Seats"
-            value={totalSeats}
-            onChange={handleTotalSeatsChange}
-            className="w-full mb-4 p-2 border border-gray-300 rounded"
-          />
-          {error && <p className="text-red-500">{error}</p>}
-          {seatError && <p className="text-red-500">{seatError}</p>}
           <button
             onClick={handleAddBus}
             className={`w-full py-2 rounded ${

@@ -29,7 +29,17 @@ public class ScheduleCardService {
     private SeatRepo seatRepo;
 
     @PostMapping("/scheduleCard")
-    public List<ScheduleCard> getScheduleCard(@RequestBody TwoDistrict inputDistrict){
+    public ScheduleCard getScheduleCard(@RequestBody String scheduleId){
+        BusSchedule busSchedule = busScheduleRepo.findBusScheduleByScheduleId(Long.parseLong(scheduleId));
+        ScheduleCard scheduleCard = new ScheduleCard();
+        scheduleCard.setBusSchedule(busSchedule);
+        scheduleCard.setSeats(seatRepo.findAllByBusSchedule(busSchedule));
+        scheduleCard.setRouteDistricts(routeDistrictRepo.findAllByRoute(busSchedule.getRoute()));
+        return scheduleCard;
+    }
+
+    @PostMapping("/scheduleCards")
+    public List<ScheduleCard> getScheduleCards(@RequestBody TwoDistrict inputDistrict){
         List<RouteDistrict> sourceContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getSource());
         List<RouteDistrict> destinationContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getDestination());
         List<Route> routesContainingBoth = new ArrayList<Route>();
