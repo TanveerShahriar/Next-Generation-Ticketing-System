@@ -14,5 +14,6 @@ import java.util.List;
 public interface BusScheduleRepo extends JpaRepository<BusSchedule, Long> {
     List<BusSchedule> findBusSchedulesByDriver(User user);
 
-    List<BusSchedule> findBusSchedulesByDepartureTimeAfter(Timestamp timestamp);
+//    List<BusSchedule> findBusSchedulesByDepartureTimeAfter(Timestamp timestamp);
+    List<BusSchedule> findBusSchedulesByDepartureTimeAfterAndDepartureTimeBefore(Timestamp timestamp1, Timestamp timestamp2);
 }

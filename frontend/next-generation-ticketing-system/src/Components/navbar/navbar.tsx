@@ -31,7 +31,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-blue-950">
+    <nav className="fixed w-full bg-blue-950">
       <div className="flex items-center justify-between">
         <Link to="/home" className="font-bold text-white text-3xl p-1">
           Next Generation Ticketing System

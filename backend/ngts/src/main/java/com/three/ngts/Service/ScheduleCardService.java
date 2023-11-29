@@ -33,17 +33,26 @@ public class ScheduleCardService {
         List<RouteDistrict> sourceContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getSource());
         List<RouteDistrict> destinationContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getDestination());
         List<Route> routesContainingBoth = new ArrayList<Route>();
+
         Timestamp originalTimestamp = inputDistrict.getTimestamp();
         long originalTimeInMillis = originalTimestamp.getTime();
-        long newTimeInMillis = originalTimeInMillis - 1;
-        Timestamp newTimestamp = new Timestamp(newTimeInMillis);
-        List<BusSchedule> allAvailableSchedule = busScheduleRepo.findBusSchedulesByDepartureTimeAfter(newTimestamp);
+        long sixHoursInMillis = 6 * 60 * 60 * 1000;
+        long newTimeInMillis = originalTimeInMillis - sixHoursInMillis - 1;
+        Timestamp newTimestamp1 = new Timestamp(newTimeInMillis);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(newTimestamp1.getTime());
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.add(Calendar.MILLISECOND, 1);
+        Timestamp newTimestamp2 = new Timestamp(calendar.getTimeInMillis());
+
+        List<BusSchedule> allAvailableSchedule = busScheduleRepo.findBusSchedulesByDepartureTimeAfterAndDepartureTimeBefore(newTimestamp1, newTimestamp2);
         List<BusSchedule> accurateSchedule = new ArrayList<BusSchedule>();
 
         for (RouteDistrict routeDistrict: sourceContainingRoutes){
             if (!routesContainingBoth.contains(routeDistrict.getRoute())){
                 for (RouteDistrict routeDistrict1: destinationContainingRoutes){
-                    if(routeDistrict.getRoute().equals(routeDistrict1.getRoute())){
+                    if(routeDistrict.getRoute().equals(routeDistrict1.getRoute()) && (routeDistrict.getDistOrder() < routeDistrict1.getDistOrder())){
                         routesContainingBoth.add(routeDistrict.getRoute());
                         break;
                     }

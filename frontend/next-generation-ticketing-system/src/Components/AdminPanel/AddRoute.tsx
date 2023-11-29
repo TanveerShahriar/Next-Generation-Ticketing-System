@@ -105,7 +105,7 @@ function AddRoute() {
 
   return (
     <div className="flex justify-center h-fit  background_image_admin">
-      <div className="w-1/3 bg-black bg-opacity-75 rounded-lg p-6 h-auto">
+      <div className="w-1/3 bg-black bg-opacity-75 rounded-lg p-6 h-auto mt-10">
         {routeList.map((routeElement) => (
           <div key={routeElement.routeDistrictId} className="font-bold mt-4">
             <label className="text-white pe-2">

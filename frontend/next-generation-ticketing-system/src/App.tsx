@@ -11,6 +11,7 @@ import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import AddBus from "./Components/AdminPanel/AddBus";
 import AddRoute from "./Components/AdminPanel/AddRoute";
 import AddSchedule from "./Components/AdminPanel/AddSchedule";
+import BuyTicket from "./Components/BuyTicket/BuyTicket";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
             { path: "/admin", element: <AdminPanel/> },
             { path: "/addBus", element: <AddBus/> },
             { path: "/addRoute", element: <AddRoute/> },
-            { path: "/addSchedule", element: <AddSchedule/> }
+            { path: "/addSchedule", element: <AddSchedule/> },
+            { path: "/buyTicket", element: <BuyTicket/> }
         ],
     },
 ]);
