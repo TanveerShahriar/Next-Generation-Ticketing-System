@@ -95,7 +95,7 @@ CREATE TABLE `ticket` (
   `purchase_date` datetime NOT NULL,
   `schedule_id` int NOT NULL,
   `user_id` int NOT NULL,
-  `refunded` tinyint(1) NOT NULL,
+  `refunded` boolean NOT NULL,
   PRIMARY KEY (`ticket_id`),
   CONSTRAINT `FK_TICKET_1` FOREIGN KEY (`schedule_id`) REFERENCES `bus_schedule` (`schedule_id`),
   CONSTRAINT `FK_TICKET_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)

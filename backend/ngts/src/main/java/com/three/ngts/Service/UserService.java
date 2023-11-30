@@ -13,6 +13,11 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @PostMapping("/users/getUser")
+    public User getUser(@RequestBody String userId){
+        return userRepo.findByUserId(Long.parseLong(userId));
+    }
+
     @PostMapping("/users/signup")
     public User signUp(@RequestBody User user){
         return userRepo.save(user);

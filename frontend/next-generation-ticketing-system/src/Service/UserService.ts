@@ -18,6 +18,10 @@ class UserService{
     findByUser(user_id: any){
         return axios.get(`http://localhost:8080/api/users/${user_id}/auths`);
     }
+
+    getUserById(user_id: any){
+        return axios.post(USER_API_BASE_URL + "/getUser", user_id);
+    }
 }
 
 export default new UserService();

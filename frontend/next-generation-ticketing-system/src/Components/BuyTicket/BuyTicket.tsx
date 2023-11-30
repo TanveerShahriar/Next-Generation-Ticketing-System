@@ -1,14 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import ScheduleCard from "../../Entity/CustomEntity/ScheduleCard";
 import TwoDistrict from "../../Entity/CustomEntity/TwoDistrict";
-import { UserToken } from "../../Token/UserToken";
+import {UserToken} from "../../Token/UserToken";
 import ScheduleCardService from "../../Service/ScheduleCardService";
 import "./buyTicket.css";
 import Seat from "../../Entity/Seat";
 import RouteDistrict from "../../Entity/RouteDistrict";
 import District from "../../Entity/District";
 import BusSchedule from "../../Entity/BusSchedule";
+import UserService from "../../Service/UserService";
+import TicketService from "../../Service/TicketService";
+import TicketAddressService from "../../Service/TicketAddressService";
+import SeatService from "../../Service/SeatService";
 
 function BuyTicket() {
     let sourceFound = false;
@@ -19,6 +23,7 @@ function BuyTicket() {
   const [scheduleCard, setScheduleCard] = useState<ScheduleCard>();
   const [seatSelected, setSeatSelected] = useState<Seat[]>([]);
   const [twoDistrict, setTwoDistrict] = useState<TwoDistrict>();
+  const [successfulTicket, setSuccessfulTicket] = useState<boolean>(false);
 
   const { authorised, userId, userType } = useContext(UserToken);
   let navigate = useNavigate();
@@ -71,6 +76,27 @@ function BuyTicket() {
         </div>
     );
   };
+
+    const renderSuccessfulTicket = () => {
+        return (
+            <div className="bg-blue-300 bg-opacity-75 border-2 border-white rounded-2xl p-10">
+                <div className="text-black text-3xl font-bold text-center">
+                    {seatSelected.length} Ticket Bought Successfully
+                </div>
+                <div className="text-black text-xl font-bold text-center">
+                    Please check your ticket in the ticket section
+                </div>
+                <div className="flex justify-center mt-5">
+                    <Link to="/home">
+                        <div className=" w-64 text-center bg-blue-500 rounded-2xl border-2 border-white p-3 text-black font-bold text-xl hover:bg-blue-700 hover:bg-opacity-75">
+                            OK
+                        </div>
+                    </Link>
+                </div>
+
+            </div>
+        );
+    };
 
   const renderDetailsInfo = () => {
 
@@ -143,14 +169,61 @@ function BuyTicket() {
           }
       };
 
-    return ( scheduleCard &&
+      const districtChangeHandler = (district: District, routeDistrictsProp: RouteDistrict[]) => {
+          if (twoDistrict) {
+              let tempTwoDistrict: TwoDistrict = { ...twoDistrict };
+              const sortedDistricts = routeOrder(routeDistrictsProp);
+              const districtIndex = sortedDistricts.indexOf(district);
+              const sourceIndex = sortedDistricts.indexOf(twoDistrict.source);
+              const destinationIndex = sortedDistricts.indexOf(twoDistrict.destination);
+              if (districtIndex > destinationIndex || (districtIndex < destinationIndex && districtIndex > sourceIndex)) {
+                  tempTwoDistrict.destination = district;
+              }
+              if (districtIndex < sourceIndex || (districtIndex > sourceIndex && districtIndex < destinationIndex)) {
+                  tempTwoDistrict.source = district;
+              }
+              setTwoDistrict(tempTwoDistrict);
+          }
+      };
+
+        const buyTicketHandler = () => {
+            if (twoDistrict) {
+                console.log(userId);
+                UserService.getUserById(userId).then((res) => {
+                    let ticket = {
+                        "purchaseDate": new Date(),
+                        busSchedule: scheduleCard?.busSchedule,
+                        "user": res.data,
+                        refunded: false
+                    }
+                    TicketService.insert(ticket).then((res1) => {
+                        let ticketAddress = {
+                            source: twoDistrict.source,
+                            destination: twoDistrict.destination,
+                            ticket: res1.data,
+                        }
+                        TicketAddressService.insert(ticketAddress).then((res2) => {
+                            seatSelected.forEach((seat) => {
+                                seat.ticket = res1.data;
+                                SeatService.updateTicket(seat).then((res3) => {});
+                            });
+                            setSuccessfulTicket(true);
+                        });
+                    });
+                });
+
+            }
+        };
+
+
+      return ( scheduleCard &&
         <div key={scheduleCard?.busSchedule.scheduleId} className={`p-3 block justify-center mt-10 border-2 border-white bg-black bg-opacity-75 rounded-2xl text-white`}>
           <div className="flex justify-between">
             <div className="font-bold text-xl">
               Bus Number: {scheduleCard.busSchedule.bus.busNo} [{scheduleCard.busSchedule.bus.busType}]
             </div>
             <div className="ps-8 font-bold text-xl">
-              Seat Available = <span className="text-indigo-700">{freeSeats(scheduleCard.seats)}</span>
+              Seat Available = <span className={`text-indigo-400 ${freeSeats(scheduleCard.seats)===0 && "text-red-600"}`}>{freeSeats(scheduleCard.seats)}</span>
             </div>
           </div>
           <div className="mt-2">
@@ -159,15 +232,15 @@ function BuyTicket() {
                   {district.distName === twoDistrict?.source.distName && (sourceFound = true) }
                   {sourceFound?
                       <>
-                        <div className="flex justify-between bg-gray-900  bg-opacity-90">
-                          <div className="text-indigo-700 font-bold">&#9745; {district.distName}</div>
-                          <div className="ps-10 text-indigo-700 font-bold">{timeCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts, index+1)}</div>
+                        <div className="flex justify-between bg-gray-900  bg-opacity-90  hover:bg-opacity-30 hover:bg-blue-300 hover:cursor-pointer" onClick={()=>{districtChangeHandler(district, scheduleCard.routeDistricts)}}>
+                          <div className="text-indigo-400 font-bold">&#9745; {district.distName}</div>
+                          <div className="ps-10 text-indigo-400 font-bold">{timeCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts, index+1)}</div>
                         </div>
                         {
                             index !== scheduleCard.routeDistricts.length - 1 &&
                             (district.distName !== twoDistrict?.destination.distName
                                     ?
-                                    <div className="text-indigo-700 font-bold  bg-gray-900  bg-opacity-90">&#9900;</div>
+                                    <div className="text-indigo-400 font-bold  bg-gray-900  bg-opacity-90">&#9900;</div>
                                     :
                                     <div>&#9900;</div>
                             )
@@ -175,7 +248,7 @@ function BuyTicket() {
                       </>
                       :
                       <>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between hover:bg-opacity-30 hover:bg-blue-300 hover:cursor-pointer" onClick={()=>{districtChangeHandler(district, scheduleCard.routeDistricts)}}>
                           <div>&#9744; {district.distName}</div>
                           <div className="ps-10">{timeCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts, index+1)}</div>
                         </div>
@@ -189,7 +262,7 @@ function BuyTicket() {
           <div className="font-bold text-center text-4xl mt-2">
             {priceCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts)} BDT
           </div>
-            <div className="flex justify-center rounded-2xl border-2 border-white bg-blue-500 bg-opacity-25 hover:bg-green-300 hover:bg-opacity-30 hover:cursor-pointer p-4 mt-3 font-bold text-2xl">
+             <div onClick={buyTicketHandler} className={`${twoDistrict?.source.distName===twoDistrict?.destination.distName &&  "bg-gray-500 pointer-events-none hover:bg-gray-500"} ${seatSelected.length < 1 && "bg-gray-500 pointer-events-none hover:bg-gray-500"} flex justify-center rounded-2xl border-2 border-white bg-blue-500 bg-opacity-25 hover:bg-green-300 hover:bg-opacity-30 hover:cursor-pointer p-4 mt-3 font-bold text-2xl`}>
                 Buy
             </div>
         </div>
@@ -214,12 +287,18 @@ function BuyTicket() {
 
   return (
     <div className="flex justify-center items-center h-screen  background_image_buy_ticket">
-      <div className=" flex-col items-center pt-20 ms-4">
-        {renderSeatButtons()}
-      </div>
-      <div className=" flex-col items-center ms-4">
+        {successfulTicket ?
+            renderSuccessfulTicket()
+            :
+            <>
+            <div className=" flex-col items-center pt-20 ms-4">
+                {renderSeatButtons()}
+            </div>
+            <div className=" flex-col items-center ms-4">
         {renderDetailsInfo()}
-      </div>
+    </div>
+            </>
+        }
     </div>
   );
 }
