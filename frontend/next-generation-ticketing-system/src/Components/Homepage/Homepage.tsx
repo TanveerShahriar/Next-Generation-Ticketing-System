@@ -14,7 +14,6 @@ import TwoDistrict from "../../Entity/CustomEntity/TwoDistrict";
 
 function Homepage() {
   let sourceFound = false;
-  let x = 0;
 
   const [districts, setDistricts] = useState<District[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>("");

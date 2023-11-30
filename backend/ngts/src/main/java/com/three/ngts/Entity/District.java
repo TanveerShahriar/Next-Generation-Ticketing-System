@@ -22,4 +22,12 @@ public class District {
     @JsonIgnore
     @OneToMany(mappedBy = "district")
     private List<RouteDistrict> routeDistricts;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "source")
+    private List<TicketAddress> ticketAddresses;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "destination")
+    private List<TicketAddress> ticketAddresses1;
 }

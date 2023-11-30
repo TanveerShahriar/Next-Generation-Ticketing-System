@@ -101,6 +101,17 @@ CREATE TABLE `ticket` (
   CONSTRAINT `FK_TICKET_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+CREATE TABLE `ticket_address` (
+  `ticket_address_id` int NOT NULL AUTO_INCREMENT,
+  `source` int NOT NULL,
+  `destination` int NOT NULL,
+  `ticket_id` int NOT NULL,
+  PRIMARY KEY (`ticket_address_id`),
+  CONSTRAINT `FK_TICKET_ADDRESS_1` FOREIGN KEY (`source`) REFERENCES `district` (`dist_id`),
+  CONSTRAINT `FK_TICKET_ADDRESS_2` FOREIGN KEY (`source`) REFERENCES `district` (`dist_id`),
+  CONSTRAINT `FK_TICKET_ADDRESS_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
 CREATE TABLE `seat` (
   `seat_id` int NOT NULL AUTO_INCREMENT,
   `seat_no` varchar(45) NOT NULL,
