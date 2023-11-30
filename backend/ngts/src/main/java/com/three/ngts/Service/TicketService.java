@@ -14,7 +14,7 @@ public class TicketService {
     private TicketRepo ticketRepo;
 
     @PostMapping("/tickets/insert")
-    public Ticket insert(@RequestBody Ticket ticket){
+    public Ticket insert(@RequestBody Ticket ticket) {
         return ticketRepo.save(ticket);
     }
 }

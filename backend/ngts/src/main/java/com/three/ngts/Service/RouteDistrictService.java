@@ -16,12 +16,12 @@ public class RouteDistrictService {
     private RouteDistrictRepo routeDistrictRepo;
 
     @PostMapping("/routeDistricts/insert")
-    public RouteDistrict insert(@RequestBody RouteDistrict routeDistrict){
+    public RouteDistrict insert(@RequestBody RouteDistrict routeDistrict) {
         return routeDistrictRepo.save(routeDistrict);
     }
 
     @GetMapping("/routeDistricts/getAll")
-    public List<RouteDistrict> getAll(){
+    public List<RouteDistrict> getAll() {
         return routeDistrictRepo.findAll();
     }
 }

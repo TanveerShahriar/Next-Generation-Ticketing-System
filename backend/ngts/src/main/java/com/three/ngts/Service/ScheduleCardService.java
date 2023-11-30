@@ -29,7 +29,7 @@ public class ScheduleCardService {
     private SeatRepo seatRepo;
 
     @PostMapping("/scheduleCard")
-    public ScheduleCard getScheduleCard(@RequestBody String scheduleId){
+    public ScheduleCard getScheduleCard(@RequestBody String scheduleId) {
         BusSchedule busSchedule = busScheduleRepo.findBusScheduleByScheduleId(Long.parseLong(scheduleId));
         ScheduleCard scheduleCard = new ScheduleCard();
         scheduleCard.setBusSchedule(busSchedule);
@@ -39,9 +39,10 @@ public class ScheduleCardService {
     }
 
     @PostMapping("/scheduleCards")
-    public List<ScheduleCard> getScheduleCards(@RequestBody TwoDistrict inputDistrict){
+    public List<ScheduleCard> getScheduleCards(@RequestBody TwoDistrict inputDistrict) {
         List<RouteDistrict> sourceContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getSource());
-        List<RouteDistrict> destinationContainingRoutes = routeDistrictRepo.findAllByDistrict(inputDistrict.getDestination());
+        List<RouteDistrict> destinationContainingRoutes = routeDistrictRepo
+                .findAllByDistrict(inputDistrict.getDestination());
         List<Route> routesContainingBoth = new ArrayList<Route>();
 
         Timestamp originalTimestamp = inputDistrict.getTimestamp();
@@ -56,13 +57,15 @@ public class ScheduleCardService {
         calendar.add(Calendar.MILLISECOND, 1);
         Timestamp newTimestamp2 = new Timestamp(calendar.getTimeInMillis());
 
-        List<BusSchedule> allAvailableSchedule = busScheduleRepo.findBusSchedulesByDepartureTimeAfterAndDepartureTimeBefore(newTimestamp1, newTimestamp2);
+        List<BusSchedule> allAvailableSchedule = busScheduleRepo
+                .findBusSchedulesByDepartureTimeAfterAndDepartureTimeBefore(newTimestamp1, newTimestamp2);
         List<BusSchedule> accurateSchedule = new ArrayList<BusSchedule>();
 
-        for (RouteDistrict routeDistrict: sourceContainingRoutes){
-            if (!routesContainingBoth.contains(routeDistrict.getRoute())){
-                for (RouteDistrict routeDistrict1: destinationContainingRoutes){
-                    if(routeDistrict.getRoute().equals(routeDistrict1.getRoute()) && (routeDistrict.getDistOrder() < routeDistrict1.getDistOrder())){
+        for (RouteDistrict routeDistrict : sourceContainingRoutes) {
+            if (!routesContainingBoth.contains(routeDistrict.getRoute())) {
+                for (RouteDistrict routeDistrict1 : destinationContainingRoutes) {
+                    if (routeDistrict.getRoute().equals(routeDistrict1.getRoute())
+                            && (routeDistrict.getDistOrder() < routeDistrict1.getDistOrder())) {
                         routesContainingBoth.add(routeDistrict.getRoute());
                         break;
                     }
@@ -70,10 +73,10 @@ public class ScheduleCardService {
             }
         }
 
-        for(BusSchedule busSchedule: allAvailableSchedule){
-            if (!accurateSchedule.contains(busSchedule)){
-                for (Route route: routesContainingBoth){
-                    if (route.equals(busSchedule.getRoute())){
+        for (BusSchedule busSchedule : allAvailableSchedule) {
+            if (!accurateSchedule.contains(busSchedule)) {
+                for (Route route : routesContainingBoth) {
+                    if (route.equals(busSchedule.getRoute())) {
                         accurateSchedule.add(busSchedule);
                         break;
                     }
@@ -81,7 +84,7 @@ public class ScheduleCardService {
             }
         }
         List<ScheduleCard> scheduleCards = new ArrayList<ScheduleCard>();
-        for (BusSchedule busSchedule: accurateSchedule){
+        for (BusSchedule busSchedule : accurateSchedule) {
             ScheduleCard scheduleCard = new ScheduleCard();
             scheduleCard.setBusSchedule(busSchedule);
             scheduleCard.setSeats(seatRepo.findAllByBusSchedule(busSchedule));
@@ -90,6 +93,5 @@ public class ScheduleCardService {
         }
         return scheduleCards;
     }
-
 
 }

@@ -14,7 +14,7 @@ public class PhoneService {
     private PhoneRepo phoneRepo;
 
     @PostMapping("/phones/insert")
-    public Phone insert(@RequestBody Phone phone){
+    public Phone insert(@RequestBody Phone phone) {
         return phoneRepo.save(phone);
     }
 }

@@ -13,7 +13,7 @@ public class TicketAddressService {
     private TicketAddressRepo ticketAddressRepo;
 
     @PostMapping("/ticketAddresses/insert")
-    public TicketAddress insert(@RequestBody TicketAddress ticketAddress){
+    public TicketAddress insert(@RequestBody TicketAddress ticketAddress) {
         return ticketAddressRepo.save(ticketAddress);
     }
 }

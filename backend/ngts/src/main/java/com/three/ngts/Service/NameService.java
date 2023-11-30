@@ -32,34 +32,37 @@ public class NameService {
     private BusScheduleRepo busScheduleRepo;
 
     @PostMapping("/names/insert")
-    public Name insert(@RequestBody Name name){
+    public Name insert(@RequestBody Name name) {
         return nameRepo.save(name);
     }
 
     @PostMapping("/names/getFreeDriver")
-    public List<Name> getFreeDriver(@RequestBody BusSchedule busScheduleProp){
+    public List<Name> getFreeDriver(@RequestBody BusSchedule busScheduleProp) {
         List<User> allUsers = userRepo.findAll();
         List<Name> freeDriver = new ArrayList<Name>();
 
-        for (User user: allUsers){
+        for (User user : allUsers) {
             List<Auth> auths = authRepo.findByUser(user);
             boolean isDriver = false;
-            for(Auth auth: auths){
+            for (Auth auth : auths) {
                 if (auth.getType().equals("busDriver")) {
                     isDriver = true;
                     break;
                 }
             }
-            if (isDriver){
+            if (isDriver) {
                 List<BusSchedule> busSchedules = busScheduleRepo.findBusSchedulesByDriver(user);
                 boolean hasScheduleClash = false;
-                for(BusSchedule busSchedule: busSchedules){
-                    if (!((busSchedule.getDepartureTime().before(busScheduleProp.getDepartureTime()) && busSchedule.getArrivalTime().before(busScheduleProp.getArrivalTime())) || (busSchedule.getDepartureTime().after(busScheduleProp.getDepartureTime()) && busSchedule.getArrivalTime().after(busScheduleProp.getArrivalTime())))) {
+                for (BusSchedule busSchedule : busSchedules) {
+                    if (!((busSchedule.getDepartureTime().before(busScheduleProp.getDepartureTime())
+                            && busSchedule.getArrivalTime().before(busScheduleProp.getArrivalTime()))
+                            || (busSchedule.getDepartureTime().after(busScheduleProp.getDepartureTime())
+                                    && busSchedule.getArrivalTime().after(busScheduleProp.getArrivalTime())))) {
                         hasScheduleClash = true;
                         break;
                     }
                 }
-                if (!hasScheduleClash){
+                if (!hasScheduleClash) {
                     freeDriver.add(nameRepo.findByUser(user));
                 }
             }

@@ -2,10 +2,10 @@ import axios from "axios";
 
 const USER_API_BASE_URL = "http://localhost:8080/api/routes";
 
-class RouteService{
-    insert(route: any){
-        return axios.post(USER_API_BASE_URL + "/insert", route);
-    }
+class RouteService {
+  insert(route: any) {
+    return axios.post(USER_API_BASE_URL + "/insert", route);
+  }
 }
 
 export default new RouteService();

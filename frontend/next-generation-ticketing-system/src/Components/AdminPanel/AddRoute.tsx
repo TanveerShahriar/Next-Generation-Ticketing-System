@@ -121,7 +121,9 @@ function AddRoute() {
             className="p-2 text-black border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             onChange={sourceChangeHandler}
           >
-            <option className="selected" value="Select Source">Select Source</option>
+            <option className="selected" value="Select Source">
+              Select Source
+            </option>
             {districts.map((district) => (
               <option key={district.distId} value={district.distId}>
                 {district.distName}

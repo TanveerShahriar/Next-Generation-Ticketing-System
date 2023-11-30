@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserToken } from "../../Token/UserToken";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./homepage.css";
 import DistrictService from "../../Service/DistrictService";
 import District from "../../Entity/District";
@@ -77,9 +77,9 @@ function Homepage() {
 
   const freeSeats = (seats: Seat[]) => {
     let freeSeat = 0;
-    for (let i = 0; i<seats.length; i++){
-      if(!seats[i].ticket){
-        freeSeat+=1;
+    for (let i = 0; i < seats.length; i++) {
+      if (!seats[i].ticket) {
+        freeSeat += 1;
       }
     }
     return freeSeat;
@@ -87,27 +87,35 @@ function Homepage() {
 
   const routeOrder = (routeDistrictProp: RouteDistrict[]): District[] => {
     let tempSortedDistrict: District[] = [];
-    for(let i = 0 ; i< routeDistrictProp.length; i++){
-      tempSortedDistrict.splice(routeDistrictProp[i].distOrder, 0, routeDistrictProp[i].district);
+    for (let i = 0; i < routeDistrictProp.length; i++) {
+      tempSortedDistrict.splice(
+        routeDistrictProp[i].distOrder,
+        0,
+        routeDistrictProp[i].district
+      );
     }
     return tempSortedDistrict;
-  }
+  };
 
   function formatTime(date: Date): string {
     const options: Intl.DateTimeFormatOptions = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
       hour12: true,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     };
 
     return date.toLocaleString(undefined, options);
   }
 
-  const timeCalculation = (busSchedule: BusSchedule, routeDistricts: RouteDistrict[], districtPosition: number) => {
+  const timeCalculation = (
+    busSchedule: BusSchedule,
+    routeDistricts: RouteDistrict[],
+    districtPosition: number
+  ) => {
     let totalDistrict = routeDistricts.length;
     let departureTime = new Date(busSchedule.departureTime);
     let arrivalTime = new Date(busSchedule.arrivalTime);
@@ -118,29 +126,38 @@ function Homepage() {
     } else if (districtPosition > 1 && districtPosition < totalDistrict) {
       const duration = arrivalTime.getTime() - departureTime.getTime();
       const interval = duration / (totalDistrict - 1);
-      const finalTime =  new Date(departureTime.getTime() + (districtPosition - 1) * interval);
+      const finalTime = new Date(
+        departureTime.getTime() + (districtPosition - 1) * interval
+      );
       return formatTime(finalTime);
     }
   };
 
-  const priceCalculation = (busSchedule: BusSchedule, routeDistricts: RouteDistrict[]) => {
+  const priceCalculation = (
+    busSchedule: BusSchedule,
+    routeDistricts: RouteDistrict[]
+  ) => {
     let isAC: boolean = busSchedule.bus.busType === "AC";
     let startingPoint = 0;
     let endingPoint = 0;
-    for(let i = 0; i<routeDistricts.length; i++){
-      if(routeDistricts[i].district.distName === twoDistrict?.source.distName){
+    for (let i = 0; i < routeDistricts.length; i++) {
+      if (
+        routeDistricts[i].district.distName === twoDistrict?.source.distName
+      ) {
         startingPoint = routeDistricts[i].distOrder;
       }
-      if(routeDistricts[i].district.distName === twoDistrict?.destination.distName){
+      if (
+        routeDistricts[i].district.distName ===
+        twoDistrict?.destination.distName
+      ) {
         endingPoint = routeDistricts[i].distOrder;
       }
     }
-    let totalCheckpoint = endingPoint - startingPoint
-    if (isAC){
-      return (totalCheckpoint*400)
-    }
-    else {
-      return (totalCheckpoint*300)
+    let totalCheckpoint = endingPoint - startingPoint;
+    if (isAC) {
+      return totalCheckpoint * 400;
+    } else {
+      return totalCheckpoint * 300;
     }
   };
 
@@ -195,54 +212,104 @@ function Homepage() {
             </button>
           </div>
         </div>
-          {scheduleCards.map((scheduleCard, idxS) => (
-              <Link to={{ pathname: '/buyTicket', search: `?data=${encodeURIComponent(JSON.stringify({"twoDistrict": twoDistrict, "scheduleId": scheduleCard.busSchedule.scheduleId}))}` }} key={scheduleCard.busSchedule.scheduleId} className={`p-1 block justify-center mt-10 border ${scheduleCards.length-1 === idxS && "mb-96"} ${freeSeats(scheduleCard.seats)==0 ? "border-red-300 bg-red-200 pointer-events-none" : "border-blue-300 hover:border-blue-600 bg-blue-200 hover:bg-blue-300"} bg-opacity-75 rounded hover:bg-opacity-70`}>
-                <div className="flex justify-between">
-                  <div className="font-bold text-xl">
-                    Bus Number: {scheduleCard.busSchedule.bus.busNo} [{scheduleCard.busSchedule.bus.busType}]
-                  </div>
-                  <div className="font-bold text-xl">
-                    Seat Available = <span className={`text-indigo-700 ${freeSeats(scheduleCard.seats)===0 && "text-red-600"}`}>{freeSeats(scheduleCard.seats)}</span>
-                  </div>
-                </div>
-                  <div className="mt-2">
-                    {routeOrder(scheduleCard.routeDistricts).map((district, index) => (
-                        <div key={index}>
-                          {district.distName === twoDistrict?.source.distName && (sourceFound = true) }
-                          {sourceFound?
-                              <>
-                                <div className="flex justify-between bg-blue-100  bg-opacity-50">
-                                  <div className="text-indigo-700 font-bold">&#9745; {district.distName}</div>
-                                  <div className="text-indigo-700 font-bold">{timeCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts, index+1)}</div>
-                                </div>
-                              {
-                                index !== scheduleCard.routeDistricts.length - 1 &&
-                                  (district.distName !== twoDistrict?.destination.distName
-                                      ?
-                                      <div className="text-indigo-700 font-bold  bg-blue-100 bg-opacity-50">&#9900;</div>
-                                      :
-                                      <div>&#9900;</div>
-                                  )
-                              }
-                            </>
-                            :
-                            <>
-                              <div className="flex justify-between">
-                                <div>&#9744; {district.distName}</div>
-                                <div>{timeCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts, index+1)}</div>
-                              </div>
-                              {index !== scheduleCard.routeDistricts.length - 1 && <div>&#9900;</div>}
-                            </>
-                          }
-                          {district.distName === twoDistrict?.destination.distName && (sourceFound = false)}
+        {scheduleCards.map((scheduleCard, idxS) => (
+          <Link
+            to={{
+              pathname: "/buyTicket",
+              search: `?data=${encodeURIComponent(
+                JSON.stringify({
+                  twoDistrict: twoDistrict,
+                  scheduleId: scheduleCard.busSchedule.scheduleId,
+                })
+              )}`,
+            }}
+            key={scheduleCard.busSchedule.scheduleId}
+            className={`p-1 block justify-center mt-10 border ${
+              scheduleCards.length - 1 === idxS && "mb-96"
+            } ${
+              freeSeats(scheduleCard.seats) == 0
+                ? "border-red-300 bg-red-200 pointer-events-none"
+                : "border-blue-300 hover:border-blue-600 bg-blue-200 hover:bg-blue-300"
+            } bg-opacity-75 rounded hover:bg-opacity-70`}
+          >
+            <div className="flex justify-between">
+              <div className="font-bold text-xl">
+                Bus Number: {scheduleCard.busSchedule.bus.busNo} [
+                {scheduleCard.busSchedule.bus.busType}]
+              </div>
+              <div className="font-bold text-xl">
+                Seat Available ={" "}
+                <span
+                  className={`text-indigo-700 ${
+                    freeSeats(scheduleCard.seats) === 0 && "text-red-600"
+                  }`}
+                >
+                  {freeSeats(scheduleCard.seats)}
+                </span>
+              </div>
+            </div>
+            <div className="mt-2">
+              {routeOrder(scheduleCard.routeDistricts).map(
+                (district, index) => (
+                  <div key={index}>
+                    {district.distName === twoDistrict?.source.distName &&
+                      (sourceFound = true)}
+                    {sourceFound ? (
+                      <>
+                        <div className="flex justify-between bg-blue-100  bg-opacity-50">
+                          <div className="text-indigo-700 font-bold">
+                            &#9745; {district.distName}
+                          </div>
+                          <div className="text-indigo-700 font-bold">
+                            {timeCalculation(
+                              scheduleCard.busSchedule,
+                              scheduleCard.routeDistricts,
+                              index + 1
+                            )}
+                          </div>
                         </div>
-                    ))}
+                        {index !== scheduleCard.routeDistricts.length - 1 &&
+                          (district.distName !==
+                          twoDistrict?.destination.distName ? (
+                            <div className="text-indigo-700 font-bold  bg-blue-100 bg-opacity-50">
+                              &#9900;
+                            </div>
+                          ) : (
+                            <div>&#9900;</div>
+                          ))}
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex justify-between">
+                          <div>&#9744; {district.distName}</div>
+                          <div>
+                            {timeCalculation(
+                              scheduleCard.busSchedule,
+                              scheduleCard.routeDistricts,
+                              index + 1
+                            )}
+                          </div>
+                        </div>
+                        {index !== scheduleCard.routeDistricts.length - 1 && (
+                          <div>&#9900;</div>
+                        )}
+                      </>
+                    )}
+                    {district.distName === twoDistrict?.destination.distName &&
+                      (sourceFound = false)}
                   </div>
-                <div className="font-bold text-center text-4xl mt-2">
-                  {priceCalculation(scheduleCard.busSchedule, scheduleCard.routeDistricts)} BDT
-                </div>
-              </Link>
-          ))}
+                )
+              )}
+            </div>
+            <div className="font-bold text-center text-4xl mt-2">
+              {priceCalculation(
+                scheduleCard.busSchedule,
+                scheduleCard.routeDistricts
+              )}{" "}
+              BDT
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

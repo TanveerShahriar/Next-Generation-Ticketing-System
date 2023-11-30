@@ -5,7 +5,7 @@
   overflow: scroll;
 }
 
-.background_image_homepage {
+.background_image_ticket {
   background-image: url("./../../Pictures/Backgrounds/home_bg.png");
   background-repeat: no-repeat;
   background-size: cover;

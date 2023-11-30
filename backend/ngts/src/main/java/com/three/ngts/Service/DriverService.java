@@ -14,7 +14,7 @@ public class DriverService {
     private DriverRepo driverRepo;
 
     @PostMapping("/drivers/insert")
-    public Driver insert(@RequestBody Driver driver){
+    public Driver insert(@RequestBody Driver driver) {
         return driverRepo.save(driver);
     }
 

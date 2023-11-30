@@ -39,7 +39,7 @@ function Signup() {
     userId,
     setUserId,
     userType,
-    setUserType
+    setUserType,
   } = useContext(UserToken);
 
   let navigate = useNavigate();
@@ -50,63 +50,61 @@ function Signup() {
   }, [authorised]);
 
   const handleSignup = () => {
-    const emailCheckerURL = "http://localhost:8080/api/users/search/findUserByEmail?email=" + email;
+    const emailCheckerURL =
+      "http://localhost:8080/api/users/search/findUserByEmail?email=" + email;
     let uniqueEmail: boolean = false;
     const fetchEmail = async () => {
-        const response = await fetch(emailCheckerURL);
-        if (response.status === 200) {
-            setEmailError("Email already exists");
-        } else {
-            setEmailError("");
-            uniqueEmail = true;
-        }
-    }
+      const response = await fetch(emailCheckerURL);
+      if (response.status === 200) {
+        setEmailError("Email already exists");
+      } else {
+        setEmailError("");
+        uniqueEmail = true;
+      }
+    };
     fetchEmail().then(() => {
-      if (uniqueEmail){
+      if (uniqueEmail) {
         let user = {
-          "email": email,
-          "address": address,
-          "password": password
-        }
+          email: email,
+          address: address,
+          password: password,
+        };
         UserService.signup(user).then((response) => {
-
           let phoneOne = {
-            "phoneNumber": phone,
-            "userId": response.data
-          }
+            phoneNumber: phone,
+            userId: response.data,
+          };
           PhoneService.insert(phoneOne).then((response_phone_one) => {
             let auth = {
-              "user": response.data,
-              "type": user_type
-            }
+              user: response.data,
+              type: user_type,
+            };
             AuthService.insert(auth).then((response_auth) => {
               let name = {
-                "firstName": firstName,
-                "lastName": lastName,
-                "user": response.data
-              }
+                firstName: firstName,
+                lastName: lastName,
+                user: response.data,
+              };
               NameService.insert(name).then((response_name) => {
-                if(secondaryPhone !== "") {
+                if (secondaryPhone !== "") {
                   let phoneTwo = {
-                    "phoneNumber": secondaryPhone,
-                    "userId": response.data
-                  }
+                    phoneNumber: secondaryPhone,
+                    userId: response.data,
+                  };
                   PhoneService.insert(phoneTwo).then();
                 }
-                if (user_type === UserType.BusDriver){
-                    let driver = {
-                        "driverLicenseNo": driverLicenseNumber,
-                        "driverLicenseExp": licenseExpireDate,
-                        "userId": response.data
-                    }
-                    DriverService.insert(driver).then((response_driver) => {
-                        setUserId(response.data.userId.toString());
-                        setUserType(user_type);
-                        setAuthorised("true");
-
-                    });
-                }
-                else {
+                if (user_type === UserType.BusDriver) {
+                  let driver = {
+                    driverLicenseNo: driverLicenseNumber,
+                    driverLicenseExp: licenseExpireDate,
+                    userId: response.data,
+                  };
+                  DriverService.insert(driver).then((response_driver) => {
+                    setUserId(response.data.userId.toString());
+                    setUserType(user_type);
+                    setAuthorised("true");
+                  });
+                } else {
                   setUserId(response.data.userId.toString());
                   setUserType(user_type);
                   setAuthorised("true");
@@ -115,7 +113,6 @@ function Signup() {
             });
           });
         });
-
       }
     });
   };
@@ -143,37 +140,37 @@ function Signup() {
   const isFormValid = () => {
     if (user_type === UserType.BusDriver) {
       return (
-          firstName.trim() !== "" &&
-          lastName.trim() !== "" &&
-          email.trim() !== "" &&
-          phone.trim() !== "" &&
-          address.trim() !== "" &&
-          password.trim() !== "" &&
-          licenseExpireDate.trim() !== "" &&
-          driverLicenseNumber.trim() !== "" &&
-          emailError === "" &&
-          passwordError === "" &&
-          firstNameError === "" &&
-          lastNameError === "" &&
-          phoneError === "" &&
-          addressError === "" &&
-          licenseExpireDateError === "" &&
-          driverLicenseNumberError === ""
+        firstName.trim() !== "" &&
+        lastName.trim() !== "" &&
+        email.trim() !== "" &&
+        phone.trim() !== "" &&
+        address.trim() !== "" &&
+        password.trim() !== "" &&
+        licenseExpireDate.trim() !== "" &&
+        driverLicenseNumber.trim() !== "" &&
+        emailError === "" &&
+        passwordError === "" &&
+        firstNameError === "" &&
+        lastNameError === "" &&
+        phoneError === "" &&
+        addressError === "" &&
+        licenseExpireDateError === "" &&
+        driverLicenseNumberError === ""
       );
     } else {
       return (
-          firstName.trim() !== "" &&
-          lastName.trim() !== "" &&
-          email.trim() !== "" &&
-          phone.trim() !== "" &&
-          address.trim() !== "" &&
-          password.trim() !== "" &&
-          emailError === "" &&
-          passwordError === "" &&
-          firstNameError === "" &&
-          lastNameError === "" &&
-          phoneError === "" &&
-          addressError === ""
+        firstName.trim() !== "" &&
+        lastName.trim() !== "" &&
+        email.trim() !== "" &&
+        phone.trim() !== "" &&
+        address.trim() !== "" &&
+        password.trim() !== "" &&
+        emailError === "" &&
+        passwordError === "" &&
+        firstNameError === "" &&
+        lastNameError === "" &&
+        phoneError === "" &&
+        addressError === ""
       );
     }
   };

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserToken } from "../../Token/UserToken";
 
 function Navbar() {
@@ -23,7 +23,7 @@ function Navbar() {
   };
 
   const handleTicketsClick = () => {
-    // Handle tickets button click
+    navigate("/tickets");
   };
 
   const handleProfileClick = () => {

@@ -278,7 +278,7 @@ function AddSchedule() {
         {errorMessages && (
           <p className="text-red-500 text-center">{errorMessages}</p>
         )}
-        {successMessages && !errorMessages &&(
+        {successMessages && !errorMessages && (
           <p className="text-green-500 text-center">{successMessages}</p>
         )}
       </div>

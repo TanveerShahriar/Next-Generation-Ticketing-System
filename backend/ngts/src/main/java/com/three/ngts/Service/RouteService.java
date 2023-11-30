@@ -16,12 +16,12 @@ public class RouteService {
     private RouteRepo routeRepo;
 
     @PostMapping("/routes/insert")
-    public Route insert(@RequestBody Route route){
+    public Route insert(@RequestBody Route route) {
         return routeRepo.save(route);
     }
 
     @GetMapping("/routes/getRoutes")
-    public List<Route> getRoutes(){
+    public List<Route> getRoutes() {
         return routeRepo.findAll();
     }
 }

@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
-import {Link, useNavigate} from "react-router-dom";
-import {UserToken} from "../../Token/UserToken";
+import { Link, useNavigate } from "react-router-dom";
+import { UserToken } from "../../Token/UserToken";
 import UserService from "../../Service/UserService";
 import AuthService from "../../Service/AuthService";
 
@@ -10,7 +10,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const {authorised, userId,userType, setAuthorised, setUserId, setUserType} = useContext(UserToken);
+  const {
+    authorised,
+    userId,
+    userType,
+    setAuthorised,
+    setUserId,
+    setUserType,
+  } = useContext(UserToken);
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -45,18 +52,17 @@ function Login() {
     e.preventDefault();
 
     let user = {
-      "email" : email,
-      "password": password
+      email: email,
+      password: password,
     };
 
     UserService.login(user).then((response) => {
-      if (response.data === false){
+      if (response.data === false) {
         setEmailError("Email or password is incorrect");
         setEmail("");
         setPasswordError("Email or password is incorrect");
         setPassword("");
-      }
-      else{
+      } else {
         UserService.findUserByEmail(email).then((res) => {
           let tempUserId = res.data._links.self.href.split("/").pop();
           setUserId(tempUserId.toString());
@@ -97,14 +103,19 @@ function Login() {
               value={email}
               onChange={handleEmailChange}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  emailError ? "border-red-500" : ""
+                emailError ? "border-red-500" : ""
               }`}
               placeholder="Enter your email"
             />
-            {emailError && <p className="text-red-500 text-xs italic">{emailError}</p>}
+            {emailError && (
+              <p className="text-red-500 text-xs italic">{emailError}</p>
+            )}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block mb-2 text-white font-bold">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-white font-bold"
+            >
               Password
             </label>
             <input
@@ -113,11 +124,13 @@ function Login() {
               value={password}
               onChange={handlePasswordChange}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  passwordError ? "border-red-500" : ""
+                passwordError ? "border-red-500" : ""
               }`}
               placeholder="Enter your password"
             />
-            {passwordError && <p className="text-red-500 text-xs italic">{passwordError}</p>}
+            {passwordError && (
+              <p className="text-red-500 text-xs italic">{passwordError}</p>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <button

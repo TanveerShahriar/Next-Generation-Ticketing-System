@@ -14,21 +14,21 @@ public class UserService {
     private UserRepo userRepo;
 
     @PostMapping("/users/getUser")
-    public User getUser(@RequestBody String userId){
+    public User getUser(@RequestBody String userId) {
         return userRepo.findByUserId(Long.parseLong(userId));
     }
 
     @PostMapping("/users/signup")
-    public User signUp(@RequestBody User user){
+    public User signUp(@RequestBody User user) {
         return userRepo.save(user);
     }
 
     @PostMapping("/users/login")
-    public boolean login(@RequestBody User user){
+    public boolean login(@RequestBody User user) {
         try {
             User newUser = userRepo.findUserByEmail(user.getEmail());
             return newUser.getEmail().equals(user.getEmail()) && newUser.getPassword().equals(user.getPassword());
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

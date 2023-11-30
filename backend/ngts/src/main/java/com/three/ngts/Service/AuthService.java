@@ -1,7 +1,6 @@
 package com.three.ngts.Service;
 
 import com.three.ngts.Entity.Auth;
-import com.three.ngts.Entity.User;
 import com.three.ngts.Repo.AuthRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,7 @@ public class AuthService {
     private AuthRepo authRepo;
 
     @PostMapping("/auths/insert")
-    public Auth insert(@RequestBody Auth auth){
+    public Auth insert(@RequestBody Auth auth) {
         return authRepo.save(auth);
     }
 }
