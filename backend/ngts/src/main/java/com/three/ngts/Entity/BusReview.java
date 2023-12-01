@@ -31,4 +31,8 @@ public class BusReview {
     @ManyToOne
     @JoinColumn(name = "bus_id")
     private Bus bus;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 }

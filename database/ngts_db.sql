@@ -129,9 +129,11 @@ CREATE TABLE `driver_review` (
   `review_date` datetime NOT NULL,
   `reviewer_id` int NOT NULL,
   `driver_id` int NOT NULL,
+  `ticket_id` int NOT NULL,
   PRIMARY KEY (`d_review_id`),
   CONSTRAINT `FK_D_REVIEW_1` FOREIGN KEY (`reviewer_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `FK_D_REVIEW_2` FOREIGN KEY (`driver_id`) REFERENCES `user` (`user_id` )
+  CONSTRAINT `FK_D_REVIEW_2` FOREIGN KEY (`driver_id`) REFERENCES `user` (`user_id` ),
+  CONSTRAINT `FK_D_REVIEW_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id` )
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 CREATE TABLE `bus_review` (
@@ -141,7 +143,9 @@ CREATE TABLE `bus_review` (
   `review_date` datetime NOT NULL,
   `reviewer_id` int NOT NULL,
   `bus_id` int NOT NULL,
+  `ticket_id` int NOT NULL,
   PRIMARY KEY (`b_review_id`),
   CONSTRAINT `FK_B_REVIEW_1` FOREIGN KEY (`reviewer_id`) REFERENCES `user` (`user_id`),
-  CONSTRAINT `FK_B_REVIEW_2` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id` )
+  CONSTRAINT `FK_B_REVIEW_2` FOREIGN KEY (`bus_id`) REFERENCES `bus` (`bus_id` ),
+  CONSTRAINT `FK_B_REVIEW_3` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id` )
 ) ENGINE=InnoDB AUTO_INCREMENT=1;

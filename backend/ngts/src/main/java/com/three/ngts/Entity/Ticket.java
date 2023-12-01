@@ -37,4 +37,12 @@ public class Ticket {
     @JsonIgnore
     @OneToMany(mappedBy = "ticket")
     private List<TicketAddress> ticketAddresses;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ticket")
+    private List<BusReview> busReviews;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ticket")
+    private List<DriverReview> driverReviews;
 }

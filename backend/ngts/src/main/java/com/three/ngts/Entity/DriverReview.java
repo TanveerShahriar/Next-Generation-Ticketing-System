@@ -31,4 +31,8 @@ public class DriverReview {
     @ManyToOne
     @JoinColumn(name = "driver_id")
     private User driver;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 }

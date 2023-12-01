@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./ticketPage.css";
 import { UserToken } from "../../Token/UserToken";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TicketService from "../../Service/TicketService";
 import TicketView from "../../Entity/CustomEntity/TicketView";
 import User from "../../Entity/User";
@@ -11,6 +11,92 @@ import BusSchedule from "../../Entity/BusSchedule";
 import RouteDistrict from "../../Entity/RouteDistrict";
 import TicketAddress from "../../Entity/TicketAddress";
 import District from "../../Entity/District";
+import BusReviewService from "../../Service/BusReviewService";
+import DriverReviewService from "../../Service/DriverReviewService";
+
+interface BusRateComponentProps {
+  ticketView: TicketView;
+}
+
+const BusRateComponent: React.FC<BusRateComponentProps> = ({ ticketView }) => {
+  const [hasReview, setHasReview] = useState(false);
+
+  useEffect(() => {
+    const fetchReview = async () => {
+        const res = await BusReviewService.checkReview(ticketView);
+        setHasReview(res.data);
+    };
+
+    fetchReview();
+  }, [ticketView]);
+
+  return (
+      <>
+        {!hasReview ? (
+            <Link
+                to={{
+                  pathname: '/busReview',
+                  search: `?data=${encodeURIComponent(
+                      JSON.stringify({
+                        ticketView: ticketView,
+                      })
+                  )}`,
+                }}
+                className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
+            >
+              Rate Bus
+            </Link>
+        ):
+            <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
+                Bus Rated
+            </div>
+        }
+
+      </>
+  );
+};
+
+interface DriverRateComponentProps {
+  ticketView: TicketView;
+}
+
+const DriverRateComponent: React.FC<DriverRateComponentProps> = ({ ticketView }) => {
+  const [hasReview, setHasReview] = useState(false);
+
+  useEffect(() => {
+    const fetchReview = async () => {
+      const res = await DriverReviewService.checkReview(ticketView);
+      setHasReview(res.data);
+    };
+
+    fetchReview();
+  }, [ticketView]);
+
+  return (
+      <>
+        {!hasReview ? (
+                <Link
+                    to={{
+                      pathname: '/driverReview',
+                      search: `?data=${encodeURIComponent(
+                          JSON.stringify({
+                            ticketView: ticketView,
+                          })
+                      )}`,
+                    }}
+                    className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
+                >
+                  Rate Driver
+                </Link>
+            ):
+            <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
+              Driver Rated
+            </div>
+        }
+
+      </>
+  );
+};
 
 const DriverNameComponent = ({ user }: { user: User }) => {
   const [driverName, setDriverName] = useState("");
@@ -325,12 +411,8 @@ function TicketPage() {
             {travelCompleteValidator(ticketView) &&
               !ticketView.ticket.refunded && (
                 <div className=" flex justify-between">
-                  <div className=" border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer">
-                    Rate Bus
-                  </div>
-                  <div className=" border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer">
-                    Rate Driver
-                  </div>
+                  <BusRateComponent ticketView={ticketView} />
+                    <DriverRateComponent ticketView={ticketView} />
                 </div>
               )}
             {ticketView.ticket.refunded && (
