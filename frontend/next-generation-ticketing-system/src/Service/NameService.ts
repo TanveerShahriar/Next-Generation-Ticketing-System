@@ -10,6 +10,10 @@ class NameService {
   getFreeDriver(busSchedule: any) {
     return axios.post(USER_API_BASE_URL + "/getFreeDriver", busSchedule);
   }
+
+  getDriverName(user: any) {
+    return axios.post(USER_API_BASE_URL + "/getDriverName", user);
+  }
 }
 
 export default new NameService();

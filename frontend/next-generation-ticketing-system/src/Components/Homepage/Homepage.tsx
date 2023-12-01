@@ -8,7 +8,6 @@ import ScheduleCardService from "../../Service/ScheduleCardService";
 import ScheduleCard from "../../Entity/CustomEntity/ScheduleCard";
 import Seat from "../../Entity/Seat";
 import RouteDistrict from "../../Entity/RouteDistrict";
-import routeDistrict from "../../Entity/RouteDistrict";
 import BusSchedule from "../../Entity/BusSchedule";
 import TwoDistrict from "../../Entity/CustomEntity/TwoDistrict";
 

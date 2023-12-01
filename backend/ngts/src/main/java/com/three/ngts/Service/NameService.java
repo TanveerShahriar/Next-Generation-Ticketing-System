@@ -36,6 +36,11 @@ public class NameService {
         return nameRepo.save(name);
     }
 
+    @PostMapping("/names/getDriverName")
+    public Name getDriverName(@RequestBody User user) {
+        return nameRepo.findByUser(user);
+    }
+
     @PostMapping("/names/getFreeDriver")
     public List<Name> getFreeDriver(@RequestBody BusSchedule busScheduleProp) {
         List<User> allUsers = userRepo.findAll();

@@ -7,7 +7,7 @@ function Backbone() {
     <>
       <Navbar />
       <Outlet />
-      <Footer />
+      {/*<Footer />*/}
     </>
   );
 }

@@ -93,13 +93,13 @@ function BuyTicket() {
     return (
       <div className="bg-blue-300 bg-opacity-75 border-2 border-white rounded-2xl p-10">
         <div className="text-black text-3xl font-bold text-center">
-          {seatSelected.length} Ticket Bought Successfully
+          {seatSelected.length} Ticket/s Bought Successfully
         </div>
         <div className="text-black text-xl font-bold text-center">
           Please check your ticket in the ticket section
         </div>
         <div className="flex justify-center mt-5">
-          <Link to="/home">
+          <Link to="/tickets">
             <div className=" w-64 text-center bg-blue-500 rounded-2xl border-2 border-white p-3 text-black font-bold text-xl hover:bg-blue-700 hover:bg-opacity-75">
               OK
             </div>
@@ -226,7 +226,6 @@ function BuyTicket() {
 
     const buyTicketHandler = () => {
       if (twoDistrict) {
-        console.log(userId);
         UserService.getUserById(userId).then((res) => {
           let ticket = {
             purchaseDate: new Date(),
