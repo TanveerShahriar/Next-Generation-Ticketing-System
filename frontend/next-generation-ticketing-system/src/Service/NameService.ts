@@ -14,6 +14,10 @@ class NameService {
   getDriverName(user: any) {
     return axios.post(USER_API_BASE_URL + "/getDriverName", user);
   }
+
+  getAllUser() {
+    return axios.get(USER_API_BASE_URL + "/getAllUser");
+  }
 }
 
 export default new NameService();

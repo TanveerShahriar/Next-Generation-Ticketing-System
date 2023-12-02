@@ -84,7 +84,7 @@ function BusReviewPage() {
         reviewDate: new Date(),
         reviewer: ticketView.ticket.user,
         bus: ticketView.busSchedule.bus,
-        ticket: ticketView.ticket
+        ticket: ticketView.ticket,
       };
       BusReviewService.insert(busReview).then((res) => {
         setReviewComplete(true);
@@ -103,17 +103,17 @@ function BusReviewPage() {
         className="w-1/3 p-6 mt-10 bg-black bg-opacity-75 rounded-lg text-white"
       >
         {reviewComplete ? (
-            <div className="flex flex-col items-center">
-              <div className="p-2 rounded text-2xl block text-white font-bold">
-                Thank You for the feedback
-              </div>
-              <button
-                  onClick={() => navigate("/tickets")}
-                  className="flex-grow font-bold mt-6 rounded block p-2 bg-blue-700 hover:bg-blue-800 border-2 border-white"
-              >
-                Okay
-              </button>
+          <div className="flex flex-col items-center">
+            <div className="p-2 rounded text-2xl block text-white font-bold">
+              Thank You for the feedback
             </div>
+            <button
+              onClick={() => navigate("/tickets")}
+              className="flex-grow font-bold mt-6 rounded block p-2 bg-blue-700 hover:bg-blue-800 border-2 border-white"
+            >
+              Okay
+            </button>
+          </div>
         ) : (
           <>
             <div className="block mb-4  text-white font-bold text-3xl">

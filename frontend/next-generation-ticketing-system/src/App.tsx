@@ -15,6 +15,7 @@ import BuyTicket from "./Components/BuyTicket/BuyTicket";
 import TicketPage from "./Components/TicketPage/TicketPage";
 import BusReviewPage from "./Components/ReviewPage/BusReviewPage";
 import DriverReviewPage from "./Components/ReviewPage/DriverReviewPage";
+import AddDriver from "./Components/AdminPanel/AddDriver";
 
 const router = createBrowserRouter([
   {
@@ -30,10 +31,11 @@ const router = createBrowserRouter([
       { path: "/addBus", element: <AddBus /> },
       { path: "/addRoute", element: <AddRoute /> },
       { path: "/addSchedule", element: <AddSchedule /> },
+      { path: "/addDriver", element: <AddDriver /> },
       { path: "/buyTicket", element: <BuyTicket /> },
       { path: "/tickets", element: <TicketPage /> },
       { path: "/busReview", element: <BusReviewPage /> },
-      { path: "/driverReview", element: <DriverReviewPage /> }
+      { path: "/driverReview", element: <DriverReviewPage /> },
     ],
   },
 ]);

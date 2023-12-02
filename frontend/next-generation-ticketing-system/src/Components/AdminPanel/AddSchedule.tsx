@@ -27,6 +27,8 @@ function AddSchedule() {
   const [selectedDriver, setSelectedDriver] = useState("");
   const [errorMessages, setErrorMessages] = useState<string>("");
   const [successMessages, setSuccessMessages] = useState<string>("");
+  const [sourceErrorMessages, setSourceErrorMessages] = useState<string>("");
+  const [destinationErrorMessages, setDestinationErrorMessages] = useState<string>("");
 
   const { authorised, userId, userType } = useContext(UserToken);
   let navigate = useNavigate();
@@ -144,6 +146,13 @@ function AddSchedule() {
   const handleDepartureTimeChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
+    let currentTime = new Date();
+    if (currentTime > new Date(e.target.value)) {
+      setSourceErrorMessages("Departure time must be after current time");
+      setDepartureTime("");
+      return;
+    }
+    setSourceErrorMessages("");
     setErrorMessages("");
     setSuccessMessages("");
     setBuses([]);
@@ -152,6 +161,24 @@ function AddSchedule() {
   };
 
   const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let currentTime = new Date();
+    if (currentTime > new Date(e.target.value)) {
+      setDestinationErrorMessages("Arrival time must be after current time");
+      setArrivalTime("");
+      return;
+    }
+    if(!departureTimeObj){
+      setDestinationErrorMessages("Set a departure time first");
+      setArrivalTime("");
+      return;
+    }
+    if(departureTimeObj>=new Date(e.target.value)){
+      setDestinationErrorMessages("Departure time must be after arrival time");
+      setArrivalTime("");
+      return;
+    }
+    setDestinationErrorMessages("");
+    setSourceErrorMessages("");
     setErrorMessages("");
     setSuccessMessages("");
     setBuses([]);
@@ -215,21 +242,29 @@ function AddSchedule() {
   return (
     <div className="flex justify-center items-center h-screen background_image_admin">
       <div className="bg-black bg-opacity-75 rounded-lg p-6">
-        <input
-          type="datetime-local"
-          aria-label="departureTime"
-          placeholder={"Departure Time"}
-          className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
-          value={departureTime}
-          onChange={handleDepartureTimeChange}
-        />
-        <input
-          type="datetime-local"
-          aria-label="arrivalTime"
-          className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
-          value={arrivalTime}
-          onChange={handleArrivalTimeChange}
-        />
+        <div>
+          <input
+              type="datetime-local"
+              aria-label="departureTime"
+              placeholder={"Departure Time"}
+              className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+              value={departureTime}
+              onChange={handleDepartureTimeChange}
+          />
+            <div className="flex justify-center items-center text-red-600">{sourceErrorMessages}</div>
+        </div>
+
+        <div>
+          <input
+              type="datetime-local"
+              aria-label="arrivalTime"
+              className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"
+              value={arrivalTime}
+              onChange={handleArrivalTimeChange}
+          />
+          <div className="flex justify-center items-center text-red-600">{destinationErrorMessages}</div>
+        </div>
+
         <select
           aria-label="bus"
           className="mt-2 w-full block bg-white hover:bg-gray-200 text-black border-2 border-black text-center py-4 px-20 rounded-lg font-bold"

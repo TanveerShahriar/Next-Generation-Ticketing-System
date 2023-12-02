@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Repository
 @CrossOrigin(origins = "http://localhost:3000")
 public interface DriverRepo extends JpaRepository<Driver, Long> {
+
+    Driver findByUserId(User user);
 }

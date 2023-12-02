@@ -6,6 +6,10 @@ class AuthService {
   insert(auth: any) {
     return axios.post(USER_API_BASE_URL + "/insert", auth);
   }
+
+  update(user: any) {
+    return axios.post(USER_API_BASE_URL + "/update", user);
+  }
 }
 
 export default new AuthService();

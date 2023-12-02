@@ -23,36 +23,35 @@ const BusRateComponent: React.FC<BusRateComponentProps> = ({ ticketView }) => {
 
   useEffect(() => {
     const fetchReview = async () => {
-        const res = await BusReviewService.checkReview(ticketView);
-        setHasReview(res.data);
+      const res = await BusReviewService.checkReview(ticketView);
+      setHasReview(res.data);
     };
 
     fetchReview();
   }, [ticketView]);
 
   return (
-      <>
-        {!hasReview ? (
-            <Link
-                to={{
-                  pathname: '/busReview',
-                  search: `?data=${encodeURIComponent(
-                      JSON.stringify({
-                        ticketView: ticketView,
-                      })
-                  )}`,
-                }}
-                className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
-            >
-              Rate Bus
-            </Link>
-        ):
-            <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
-                Bus Rated
-            </div>
-        }
-
-      </>
+    <>
+      {!hasReview ? (
+        <Link
+          to={{
+            pathname: "/busReview",
+            search: `?data=${encodeURIComponent(
+              JSON.stringify({
+                ticketView: ticketView,
+              })
+            )}`,
+          }}
+          className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
+        >
+          Rate Bus
+        </Link>
+      ) : (
+        <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
+          Bus Rated
+        </div>
+      )}
+    </>
   );
 };
 
@@ -60,7 +59,9 @@ interface DriverRateComponentProps {
   ticketView: TicketView;
 }
 
-const DriverRateComponent: React.FC<DriverRateComponentProps> = ({ ticketView }) => {
+const DriverRateComponent: React.FC<DriverRateComponentProps> = ({
+  ticketView,
+}) => {
   const [hasReview, setHasReview] = useState(false);
 
   useEffect(() => {
@@ -73,28 +74,27 @@ const DriverRateComponent: React.FC<DriverRateComponentProps> = ({ ticketView })
   }, [ticketView]);
 
   return (
-      <>
-        {!hasReview ? (
-                <Link
-                    to={{
-                      pathname: '/driverReview',
-                      search: `?data=${encodeURIComponent(
-                          JSON.stringify({
-                            ticketView: ticketView,
-                          })
-                      )}`,
-                    }}
-                    className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
-                >
-                  Rate Driver
-                </Link>
-            ):
-            <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
-              Driver Rated
-            </div>
-        }
-
-      </>
+    <>
+      {!hasReview ? (
+        <Link
+          to={{
+            pathname: "/driverReview",
+            search: `?data=${encodeURIComponent(
+              JSON.stringify({
+                ticketView: ticketView,
+              })
+            )}`,
+          }}
+          className="border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
+        >
+          Rate Driver
+        </Link>
+      ) : (
+        <div className="border-2 border-white bg-gray-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center">
+          Driver Rated
+        </div>
+      )}
+    </>
   );
 };
 
@@ -195,9 +195,9 @@ function TicketPage() {
     let departureTime = new Date(busSchedule.departureTime);
     let arrivalTime = new Date(busSchedule.arrivalTime);
     if (districtPosition === 1) {
-      return departureTime;
+      return new Date(departureTime);
     } else if (districtPosition === totalDistrict) {
-      return arrivalTime;
+      return new Date(arrivalTime);
     } else if (districtPosition > 1 && districtPosition < totalDistrict) {
       const duration = arrivalTime.getTime() - departureTime.getTime();
       const interval = duration / (totalDistrict - 1);
@@ -221,7 +221,7 @@ function TicketPage() {
           break;
         }
       }
-      return timeCalculationForRefund(busSchedule, routeDistricts, index);
+      return timeCalculationForRefund(busSchedule, routeDistricts, index + 1);
     } else {
       for (let i = 0; i < sortedDistricts.length; i++) {
         if (
@@ -231,7 +231,7 @@ function TicketPage() {
           break;
         }
       }
-      return timeCalculationForRefund(busSchedule, routeDistricts, index);
+      return timeCalculationForRefund(busSchedule, routeDistricts, index + 1);
     }
   };
 
@@ -250,7 +250,7 @@ function TicketPage() {
           break;
         }
       }
-      return timeCalculation(busSchedule, routeDistricts, index);
+      return timeCalculation(busSchedule, routeDistricts, index + 1);
     } else {
       for (let i = 0; i < sortedDistricts.length; i++) {
         if (
@@ -260,7 +260,7 @@ function TicketPage() {
           break;
         }
       }
-      return timeCalculation(busSchedule, routeDistricts, index);
+      return timeCalculation(busSchedule, routeDistricts, index + 1);
     }
   };
 
@@ -412,7 +412,7 @@ function TicketPage() {
               !ticketView.ticket.refunded && (
                 <div className=" flex justify-between">
                   <BusRateComponent ticketView={ticketView} />
-                    <DriverRateComponent ticketView={ticketView} />
+                  <DriverRateComponent ticketView={ticketView} />
                 </div>
               )}
             {ticketView.ticket.refunded && (

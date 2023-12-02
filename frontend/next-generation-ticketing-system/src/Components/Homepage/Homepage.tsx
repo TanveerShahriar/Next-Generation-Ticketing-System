@@ -21,6 +21,7 @@ function Homepage() {
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const [scheduleCards, setScheduleCards] = useState<ScheduleCard[]>([]);
   const [twoDistrict, setTwoDistrict] = useState<TwoDistrict>();
+  const [dateError, setDateError] = useState<string>("");
 
   const { authorised, userId, userType } = useContext(UserToken);
   let navigate = useNavigate();
@@ -58,7 +59,16 @@ function Homepage() {
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(e.target.value);
+    let currentDate = new Date();
+    let selectedDate = new Date(e.target.value);
+    if (selectedDate.getDate() < currentDate.getDate()) {
+      setDateError("Invalid Date");
+      setSelectedDate("");
+      return;
+    } else {
+      setDateError("");
+      setSelectedDate(e.target.value);
+    }
   };
 
   const handleFindClick = () => {
@@ -191,13 +201,16 @@ function Homepage() {
                 </option>
               ))}
             </select>
-            <input
-              aria-label="date"
-              type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-              className="p-2 border border-gray-300 rounded"
-            />
+            <div>
+              <input
+                aria-label="date"
+                type="date"
+                value={selectedDate}
+                onChange={handleDateChange}
+                className="p-2 border border-gray-300 rounded"
+              />
+              <div className="text-red-600 text-xs">{dateError}</div>
+            </div>
             <button
               className={`ps-6 pe-6 bg-blue-500 text-white rounded hover:bg-blue-600 ${
                 isButtonDisabled

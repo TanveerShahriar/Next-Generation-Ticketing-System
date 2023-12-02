@@ -88,7 +88,7 @@ function DriverReviewPage() {
         reviewDate: new Date(),
         reviewer: ticketView.ticket.user,
         driver: ticketView.busSchedule.driver,
-        ticket: ticketView.ticket
+        ticket: ticketView.ticket,
       };
       DriverReviewService.insert(driverReview).then((res) => {
         setReviewComplete(true);
@@ -101,8 +101,8 @@ function DriverReviewPage() {
   };
 
   useEffect(() => {
-    if(ticketView){
-      NameService.getDriverName(ticketView?.busSchedule.driver).then((res)=>{
+    if (ticketView) {
+      NameService.getDriverName(ticketView?.busSchedule.driver).then((res) => {
         let name: Name = res.data;
         setDriverName(name.firstName + " " + name.lastName);
       });
@@ -110,84 +110,82 @@ function DriverReviewPage() {
   }, [jsonString, ticketView]);
 
   return (
-      <div className="flex justify-center items-center h-screen background_image_bus_review body_design">
-        <div
-            id="main-div"
-            className="w-1/3 p-6 mt-10 bg-black bg-opacity-75 rounded-lg text-white"
-        >
-          {reviewComplete ? (
-              <div className="flex flex-col items-center">
-                <div className="p-2 rounded text-2xl block text-white font-bold">
-                  Thank You for the feedback
-                </div>
-                <button
-                    onClick={() => navigate("/tickets")}
-                    className="flex-grow font-bold mt-6 rounded block p-2 bg-blue-700 hover:bg-blue-800 border-2 border-white"
-                >
-                  Okay
-                </button>
-              </div>
-          ) : (
-              <>
-                <div className="block mb-4  text-white font-bold text-3xl">
-                  Leave a review for:{" "}
-                  <span className="text-indigo-700">
-                {driverName}
-              </span>
-                </div>
-                <div className="text-black font-bold">
-                  <label htmlFor="review-point" className="block mb-2 text-white">
-                    Review Point:
-                  </label>
-                  <input
-                      type="number"
-                      id="review-point"
-                      className="border border-gray-300 p-2 w-full rounded"
-                      step="0.1"
-                      min="0"
-                      max="5"
-                      value={reviewPoint !== null ? reviewPoint.toString() : ""}
-                      onChange={handleReviewPointChange}
-                      style={{ color: getReviewPointColor(reviewPoint) }}
-                  />
-                  {reviewPointError && (
-                      <p className="text-red-500">{reviewPointError}</p>
-                  )}
-                </div>
-                <div className="mt-4 text-black font-bold">
-                  <label htmlFor="review-text" className="block mb-2 text-white">
-                    Review Text:
-                  </label>
-                  <textarea
-                      id="review-text"
-                      className="border border-gray-300 p-2 w-full h-80 resize-none rounded"
-                      maxLength={1024}
-                      value={reviewText}
-                      onChange={handleReviewTextChange}
-                      onDragStart={handleDragStart}
-                  />
-                  {reviewTextError && (
-                      <p className="text-red-500">{reviewTextError}</p>
-                  )}
-                </div>
-                <div className="mt-4">
-                  <button
-                      type="button"
-                      className={`${
-                          isSubmitDisabled
-                              ? "hover:bg-gray-500 bg-gray-500"
-                              : "bg-blue-700 hover:bg-blue-800"
-                      } text-white p-2 rounded block w-full font-bold`}
-                      onClick={handleSubmit}
-                      disabled={isSubmitDisabled}
-                  >
-                    Submit
-                  </button>
-                </div>
-              </>
-          )}
-        </div>
+    <div className="flex justify-center items-center h-screen background_image_bus_review body_design">
+      <div
+        id="main-div"
+        className="w-1/3 p-6 mt-10 bg-black bg-opacity-75 rounded-lg text-white"
+      >
+        {reviewComplete ? (
+          <div className="flex flex-col items-center">
+            <div className="p-2 rounded text-2xl block text-white font-bold">
+              Thank You for the feedback
+            </div>
+            <button
+              onClick={() => navigate("/tickets")}
+              className="flex-grow font-bold mt-6 rounded block p-2 bg-blue-700 hover:bg-blue-800 border-2 border-white"
+            >
+              Okay
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="block mb-4  text-white font-bold text-3xl">
+              Leave a review for:{" "}
+              <span className="text-indigo-700">{driverName}</span>
+            </div>
+            <div className="text-black font-bold">
+              <label htmlFor="review-point" className="block mb-2 text-white">
+                Review Point:
+              </label>
+              <input
+                type="number"
+                id="review-point"
+                className="border border-gray-300 p-2 w-full rounded"
+                step="0.1"
+                min="0"
+                max="5"
+                value={reviewPoint !== null ? reviewPoint.toString() : ""}
+                onChange={handleReviewPointChange}
+                style={{ color: getReviewPointColor(reviewPoint) }}
+              />
+              {reviewPointError && (
+                <p className="text-red-500">{reviewPointError}</p>
+              )}
+            </div>
+            <div className="mt-4 text-black font-bold">
+              <label htmlFor="review-text" className="block mb-2 text-white">
+                Review Text:
+              </label>
+              <textarea
+                id="review-text"
+                className="border border-gray-300 p-2 w-full h-80 resize-none rounded"
+                maxLength={1024}
+                value={reviewText}
+                onChange={handleReviewTextChange}
+                onDragStart={handleDragStart}
+              />
+              {reviewTextError && (
+                <p className="text-red-500">{reviewTextError}</p>
+              )}
+            </div>
+            <div className="mt-4">
+              <button
+                type="button"
+                className={`${
+                  isSubmitDisabled
+                    ? "hover:bg-gray-500 bg-gray-500"
+                    : "bg-blue-700 hover:bg-blue-800"
+                } text-white p-2 rounded block w-full font-bold`}
+                onClick={handleSubmit}
+                disabled={isSubmitDisabled}
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        )}
       </div>
+    </div>
   );
 }
 
