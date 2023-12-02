@@ -35,10 +35,10 @@ public class BusSchedule {
     private User driver;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "busSchedule")
+    @OneToMany(mappedBy = "busSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "busSchedule")
+    @OneToMany(mappedBy = "busSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats;
 }

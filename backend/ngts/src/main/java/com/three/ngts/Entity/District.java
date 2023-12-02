@@ -20,14 +20,14 @@ public class District {
     private String distName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "district")
+    @OneToMany(mappedBy = "district", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RouteDistrict> routeDistricts;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "source")
+    @OneToMany(mappedBy = "source", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketAddress> ticketAddresses;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "destination")
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketAddress> ticketAddresses1;
 }

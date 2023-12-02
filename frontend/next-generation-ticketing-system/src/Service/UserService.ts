@@ -20,6 +20,9 @@ class UserService {
   findByUser(user_id: any) {
     return axios.get(`http://localhost:8080/api/users/${user_id}/auths`);
   }
+  deleteUser(user_id: any) {
+    return axios.delete(`http://localhost:8080/api/users/` + user_id);
+  }
 
   getUserById(user_id: any) {
     return axios.post(USER_API_BASE_URL + "/getUser", user_id);

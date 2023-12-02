@@ -6,6 +6,7 @@ import com.three.ngts.Repo.AuthRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,5 +28,18 @@ public class AuthService {
         Auth auth = auths.get(0);
         auth.setType("busDriver");
         return authRepo.save(auth);
+    }
+
+    @GetMapping("/auths/getAllDriver")
+    public List<User> getAllDriver() {
+        List<Auth> auths = authRepo.findAll();
+        List<User> drivers = new ArrayList<>();
+
+        for (Auth auth : auths) {
+            if (auth.getType().equals("busDriver")) {
+                drivers.add(auth.getUser());
+            }
+        }
+        return drivers;
     }
 }

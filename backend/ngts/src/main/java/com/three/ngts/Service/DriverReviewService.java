@@ -1,6 +1,5 @@
 package com.three.ngts.Service;
 
-import com.three.ngts.Entity.BusReview;
 import com.three.ngts.Entity.CustomEntity.TicketView;
 import com.three.ngts.Entity.DriverReview;
 import com.three.ngts.Repo.DriverReviewRepo;
@@ -18,13 +17,14 @@ public class DriverReviewService {
     private DriverReviewRepo driverReviewRepo;
 
     @PostMapping("/driverReviews/insert")
-    public DriverReview insert(@RequestBody DriverReview driverReview){
+    public DriverReview insert(@RequestBody DriverReview driverReview) {
         return driverReviewRepo.save(driverReview);
     }
 
     @PostMapping("/driverReviews/checkReview")
-    public boolean checkReview(@RequestBody TicketView ticketView){
-        List<DriverReview> driverReviews = driverReviewRepo.findAllByTicketAndDriverAndReviewer(ticketView.getTicket(), ticketView.getBusSchedule().getDriver(), ticketView.getTicket().getUser());
+    public boolean checkReview(@RequestBody TicketView ticketView) {
+        List<DriverReview> driverReviews = driverReviewRepo.findAllByTicketAndDriverAndReviewer(ticketView.getTicket(),
+                ticketView.getBusSchedule().getDriver(), ticketView.getTicket().getUser());
         return !driverReviews.isEmpty();
     }
 }

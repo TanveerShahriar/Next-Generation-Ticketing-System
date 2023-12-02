@@ -26,38 +26,38 @@ public class User {
     private String address;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Name name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phone;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Auth> auths;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "userId")
+    @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Driver driver;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BusSchedule> busSchedules;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DriverReview> driverReviewer;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DriverReview> driverReviews;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BusReview> busReviewer;
 }

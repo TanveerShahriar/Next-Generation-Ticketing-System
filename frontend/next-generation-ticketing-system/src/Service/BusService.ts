@@ -12,6 +12,14 @@ class BusService {
   getFreeBuses(busSchedule: any) {
     return axios.post(USER_API_BASE_URL + "/getFreeBuses", busSchedule);
   }
+
+  getAllBus() {
+    return axios.get(USER_API_BASE_URL + "/getAllBus");
+  }
+
+  deleteBus(bus_id: any) {
+    return axios.delete(`http://localhost:8080/api/buses/` + bus_id);
+  }
 }
 
 export default new BusService();

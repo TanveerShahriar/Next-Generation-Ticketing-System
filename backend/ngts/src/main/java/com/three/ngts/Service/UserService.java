@@ -3,7 +3,11 @@ package com.three.ngts.Service;
 import com.three.ngts.Entity.User;
 import com.three.ngts.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,6 +34,18 @@ public class UserService {
             return newUser.getEmail().equals(user.getEmail()) && newUser.getPassword().equals(user.getPassword());
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        Optional<User> optionalUser = userRepo.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            userRepo.deleteById(userId);
+            return ResponseEntity.ok("User deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
 }

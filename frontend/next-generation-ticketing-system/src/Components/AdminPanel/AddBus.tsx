@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserToken } from "../../Token/UserToken";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./adminPanel.css";
 import BusService from "../../Service/BusService";
 
@@ -126,17 +126,25 @@ function AddBus() {
           />
           {error && <p className="text-red-500">{error}</p>}
           {seatError && <p className="text-red-500">{seatError}</p>}
-          <button
-            onClick={handleAddBus}
-            className={`w-full py-2 rounded ${
-              isButtonDisabled()
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-blue-500 text-white"
-            }`}
-            disabled={isButtonDisabled()}
-          >
-            Add Bus
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={handleAddBus}
+              className={`w-full py-2 rounded ${
+                isButtonDisabled()
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-blue-500 text-white"
+              }`}
+              disabled={isButtonDisabled()}
+            >
+              Add Bus
+            </button>
+            <Link
+              to={"/deleteBus"}
+              className=" ms-4 bg-red-700 text-white p-2 rounded hover:bg-red-900"
+            >
+              Delete Bus
+            </Link>
+          </div>
           {successMsg && <p className="text-green-500 mt-4">{successMsg}</p>}
         </div>
       </div>

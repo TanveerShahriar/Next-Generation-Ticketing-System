@@ -16,6 +16,9 @@ import TicketPage from "./Components/TicketPage/TicketPage";
 import BusReviewPage from "./Components/ReviewPage/BusReviewPage";
 import DriverReviewPage from "./Components/ReviewPage/DriverReviewPage";
 import AddDriver from "./Components/AdminPanel/AddDriver";
+import UpdateDriverLicence from "./Components/AdminPanel/UpdateDriverLicence";
+import DeleteDriver from "./Components/AdminPanel/DeleteDriver";
+import DeleteBus from "./Components/AdminPanel/DeleteBus";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +39,9 @@ const router = createBrowserRouter([
       { path: "/tickets", element: <TicketPage /> },
       { path: "/busReview", element: <BusReviewPage /> },
       { path: "/driverReview", element: <DriverReviewPage /> },
+      { path: "/updateDriverLicence", element: <UpdateDriverLicence /> },
+      { path: "/deleteDriver", element: <DeleteDriver /> },
+      { path: "/deleteBus", element: <DeleteBus /> },
     ],
   },
 ]);

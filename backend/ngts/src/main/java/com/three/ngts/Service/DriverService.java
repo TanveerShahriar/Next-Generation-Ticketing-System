@@ -18,4 +18,11 @@ public class DriverService {
         return driverRepo.save(driver);
     }
 
+    @PostMapping("/drivers/updateExp")
+    public Driver updateExp(@RequestBody Driver driver) {
+        Driver driver1 = driverRepo.findByUserId(driver.getUserId());
+        driver1.setDriverLicenseExp(driver.getDriverLicenseExp());
+        return driverRepo.save(driver1);
+    }
+
 }

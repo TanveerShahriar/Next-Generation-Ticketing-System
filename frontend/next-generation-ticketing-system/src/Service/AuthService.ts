@@ -10,6 +10,9 @@ class AuthService {
   update(user: any) {
     return axios.post(USER_API_BASE_URL + "/update", user);
   }
+  getAllDriver() {
+    return axios.get(USER_API_BASE_URL + "/getAllDriver");
+  }
 }
 
 export default new AuthService();

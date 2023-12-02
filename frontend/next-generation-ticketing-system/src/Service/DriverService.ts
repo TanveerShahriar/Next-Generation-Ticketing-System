@@ -6,6 +6,10 @@ class DriverService {
   insert(driver: any) {
     return axios.post(USER_API_BASE_URL + "/insert", driver);
   }
+
+  updateExp(driver: any) {
+    return axios.post(USER_API_BASE_URL + "/updateExp", driver);
+  }
 }
 
 export default new DriverService();

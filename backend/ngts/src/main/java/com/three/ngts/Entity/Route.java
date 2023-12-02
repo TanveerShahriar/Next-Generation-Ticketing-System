@@ -17,10 +17,10 @@ public class Route {
     private Long routeId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RouteDistrict> routeDistricts;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BusSchedule> busSchedules;
 }
