@@ -224,6 +224,11 @@ function Homepage() {
             </button>
           </div>
         </div>
+        {scheduleCards.length === 0 && (
+          <div className="text-center text-5xl text-white rounded p-20 bg-black bg-opacity-25 mt-10">
+            No Bus Found
+          </div>
+        )}
         {scheduleCards.map((scheduleCard, idxS) => (
           <Link
             to={{

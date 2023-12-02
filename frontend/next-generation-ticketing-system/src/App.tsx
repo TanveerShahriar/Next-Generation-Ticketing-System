@@ -19,6 +19,7 @@ import AddDriver from "./Components/AdminPanel/AddDriver";
 import UpdateDriverLicence from "./Components/AdminPanel/UpdateDriverLicence";
 import DeleteDriver from "./Components/AdminPanel/DeleteDriver";
 import DeleteBus from "./Components/AdminPanel/DeleteBus";
+import UpcomingRide from "./Components/UpcomingRide/UpcomingRide";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       { path: "/updateDriverLicence", element: <UpdateDriverLicence /> },
       { path: "/deleteDriver", element: <DeleteDriver /> },
       { path: "/deleteBus", element: <DeleteBus /> },
+      { path: "/upcomingRide", element: <UpcomingRide /> },
     ],
   },
 ]);

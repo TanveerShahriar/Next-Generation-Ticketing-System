@@ -26,10 +26,6 @@ function Navbar() {
     navigate("/tickets");
   };
 
-  const handleProfileClick = () => {
-    // Handle profile button click
-  };
-
   return (
     <nav className="fixed w-full bg-blue-950">
       <div className="flex items-center justify-between">
@@ -46,17 +42,19 @@ function Navbar() {
                 Admin Panel
               </button>
             )}
+            {userType === "busDriver" && (
+              <Link
+                to={"/upcomingRide"}
+                className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
+              >
+                Upcoming Ride
+              </Link>
+            )}
             <button
               className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
               onClick={handleTicketsClick}
             >
               Tickets
-            </button>
-            <button
-              className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
-              onClick={handleProfileClick}
-            >
-              Profile
             </button>
             <button
               className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"

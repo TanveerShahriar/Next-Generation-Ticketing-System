@@ -329,6 +329,11 @@ function TicketPage() {
   return (
     <div className="flex justify-center h-screen background_image_ticket body_design">
       <div className="w-1/3 p-6 mt-10">
+        {ticketViews.length === 0 && (
+          <div className="text-center text-5xl text-white rounded p-20 bg-black bg-opacity-25 mt-10">
+            No Ticket Found
+          </div>
+        )}
         {ticketViews.map((ticketView) => (
           <div
             key={ticketView.ticket.ticketId}
