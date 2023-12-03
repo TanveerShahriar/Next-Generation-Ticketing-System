@@ -25,4 +25,9 @@ public class DriverService {
         return driverRepo.save(driver1);
     }
 
+    @GetMapping("/drivers/totalDriver")
+    public Integer totalDriver(){
+        return driverRepo.findAll().size();
+    }
+
 }

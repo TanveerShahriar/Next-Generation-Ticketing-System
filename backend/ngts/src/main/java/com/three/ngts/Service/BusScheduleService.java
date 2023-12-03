@@ -65,4 +65,16 @@ public class BusScheduleService {
         return driverRides;
     }
 
+    @GetMapping("/busSchedules/totalUpcomingRide")
+    public Integer totalUpcomingRide(){
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        return busScheduleRepo.findAllByDepartureTimeAfter(currentTime).size();
+    }
+
+    @GetMapping("/busSchedules/totalCompletedRide")
+    public Integer totalCompletedRide(){
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        return busScheduleRepo.findAllByDepartureTimeBefore(currentTime).size();
+    }
+
 }

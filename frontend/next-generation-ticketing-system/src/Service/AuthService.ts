@@ -13,6 +13,10 @@ class AuthService {
   getAllDriver() {
     return axios.get(USER_API_BASE_URL + "/getAllDriver");
   }
+
+  totalPassenger() {
+    return axios.get(USER_API_BASE_URL + "/totalPassenger");
+  }
 }
 
 export default new AuthService();

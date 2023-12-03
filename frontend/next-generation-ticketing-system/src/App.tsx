@@ -20,6 +20,8 @@ import UpdateDriverLicence from "./Components/AdminPanel/UpdateDriverLicence";
 import DeleteDriver from "./Components/AdminPanel/DeleteDriver";
 import DeleteBus from "./Components/AdminPanel/DeleteBus";
 import UpcomingRide from "./Components/UpcomingRide/UpcomingRide";
+import Statistics from "./Components/Statistics/Statistics";
+import ViewReview from "./Components/ReviewPage/ViewReview";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +46,9 @@ const router = createBrowserRouter([
       { path: "/deleteDriver", element: <DeleteDriver /> },
       { path: "/deleteBus", element: <DeleteBus /> },
       { path: "/upcomingRide", element: <UpcomingRide /> },
+      { path: "/upcomingRide", element: <UpcomingRide /> },
+      { path: "/statistics", element: <Statistics /> },
+      { path: "/viewReview", element: <ViewReview /> },
     ],
   },
 ]);

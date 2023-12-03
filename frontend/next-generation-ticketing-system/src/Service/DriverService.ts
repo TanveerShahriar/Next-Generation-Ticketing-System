@@ -10,6 +10,10 @@ class DriverService {
   updateExp(driver: any) {
     return axios.post(USER_API_BASE_URL + "/updateExp", driver);
   }
+
+  totalDriver() {
+        return axios.get(USER_API_BASE_URL + "/totalDriver");
+    }
 }
 
 export default new DriverService();

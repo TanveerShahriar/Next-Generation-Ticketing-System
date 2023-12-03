@@ -15,6 +15,10 @@ class TicketService {
   getRefund(ticketView: any) {
     return axios.post(USER_API_BASE_URL + "/getRefund", ticketView);
   }
+
+  totalTicket() {
+    return axios.get(USER_API_BASE_URL + "/totalTicket");
+  }
 }
 
 export default new TicketService();

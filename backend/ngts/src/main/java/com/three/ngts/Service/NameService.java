@@ -38,6 +38,27 @@ public class NameService {
         return nameRepo.findByUser(user);
     }
 
+    @GetMapping("/names/getAllDriver")
+    public List<Name> getAllDriver() {
+        List<User> allUsers = userRepo.findAll();
+        List<Name> allDriver = new ArrayList<Name>();
+
+        for (User user : allUsers) {
+            List<Auth> auths = authRepo.findByUser(user);
+            boolean isDriver = false;
+            for (Auth auth : auths) {
+                if (auth.getType().equals("busDriver")) {
+                    isDriver = true;
+                    break;
+                }
+            }
+            if (isDriver) {
+                allDriver.add(nameRepo.findByUser(user));
+            }
+        }
+        return allDriver;
+    }
+
     @GetMapping("/names/getAllUser")
     public List<User> getAllUser() {
         List<User> allUser = userRepo.findAll();

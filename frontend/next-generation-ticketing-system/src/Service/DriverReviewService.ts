@@ -10,6 +10,10 @@ class DriverReviewService {
   checkReview(ticketView: any) {
     return axios.post(USER_API_BASE_URL + "/checkReview", ticketView);
   }
+
+  getDriverReview(driver: any) {
+    return axios.post(USER_API_BASE_URL + "/getDriverReview", driver);
+  }
 }
 
 export default new DriverReviewService();

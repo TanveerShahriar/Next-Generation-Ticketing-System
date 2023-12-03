@@ -1,5 +1,6 @@
 package com.three.ngts.Service;
 
+import com.three.ngts.Entity.Bus;
 import com.three.ngts.Entity.Route;
 import com.three.ngts.Repo.RouteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class RouteService {
     @GetMapping("/routes/getRoutes")
     public List<Route> getRoutes() {
         return routeRepo.findAll();
+    }
+
+    @GetMapping("/routes/totalRoute")
+    public Integer totalRoute() {
+        return routeRepo.findAll().size();
     }
 }

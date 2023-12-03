@@ -42,4 +42,16 @@ public class AuthService {
         }
         return drivers;
     }
+
+    @GetMapping("/auths/totalPassenger")
+    public Integer totalPassenger(){
+        List<Auth> auths =  authRepo.findAll();
+        Integer count = 0;
+        for (Auth auth : auths) {
+            if (auth.getType().equals("general")) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

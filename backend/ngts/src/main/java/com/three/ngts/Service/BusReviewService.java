@@ -1,5 +1,6 @@
 package com.three.ngts.Service;
 
+import com.three.ngts.Entity.Bus;
 import com.three.ngts.Entity.BusReview;
 import com.three.ngts.Entity.CustomEntity.TicketView;
 import com.three.ngts.Repo.BusReviewRepo;
@@ -25,5 +26,10 @@ public class BusReviewService {
     public boolean checkReview(@RequestBody TicketView ticketView){
         List<BusReview> busReviews = busReviewRepo.findAllByTicketAndReviewerAndBus(ticketView.getTicket(), ticketView.getTicket().getUser(), ticketView.getBusSchedule().getBus());
         return !busReviews.isEmpty();
+    }
+
+    @PostMapping("/busReviews/getBusReview")
+    public List<BusReview> getBusReview(@RequestBody Bus bus) {
+        return busReviewRepo.findAllByBus(bus);
     }
 }

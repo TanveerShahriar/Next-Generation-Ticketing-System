@@ -27,6 +27,10 @@ class UserService {
   getUserById(user_id: any) {
     return axios.post(USER_API_BASE_URL + "/getUser", user_id);
   }
+
+  totalUser() {
+    return axios.get(USER_API_BASE_URL + "/totalUser");
+  }
 }
 
 export default new UserService();

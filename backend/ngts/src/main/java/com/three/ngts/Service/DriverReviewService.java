@@ -2,6 +2,7 @@ package com.three.ngts.Service;
 
 import com.three.ngts.Entity.CustomEntity.TicketView;
 import com.three.ngts.Entity.DriverReview;
+import com.three.ngts.Entity.User;
 import com.three.ngts.Repo.DriverReviewRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,5 +27,10 @@ public class DriverReviewService {
         List<DriverReview> driverReviews = driverReviewRepo.findAllByTicketAndDriverAndReviewer(ticketView.getTicket(),
                 ticketView.getBusSchedule().getDriver(), ticketView.getTicket().getUser());
         return !driverReviews.isEmpty();
+    }
+
+    @PostMapping("/driverReviews/getDriverReview")
+    public List<DriverReview> getDriverReview(@RequestBody User user) {
+        return driverReviewRepo.findAllByDriver(user);
     }
 }

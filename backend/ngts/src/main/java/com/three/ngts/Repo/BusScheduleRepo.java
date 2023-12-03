@@ -22,4 +22,8 @@ public interface BusScheduleRepo extends JpaRepository<BusSchedule, Long> {
     List<BusSchedule> findAllByDriver(User user);
 
     List<BusSchedule> findBusSchedulesByDriverOrderByDepartureTime(User user);
+
+    List<BusSchedule> findAllByDepartureTimeAfter(Timestamp timestamp);
+
+    List<BusSchedule> findAllByDepartureTimeBefore(Timestamp timestamp);
 }

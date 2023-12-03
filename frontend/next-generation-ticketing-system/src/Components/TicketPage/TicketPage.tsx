@@ -108,7 +108,7 @@ const DriverNameComponent = ({ user }: { user: User }) => {
     });
   }, [user]);
 
-  return <span>{driverName}</span>;
+  return <span>{driverName} [{user.email}]</span>;
 };
 
 function TicketPage() {
@@ -403,16 +403,16 @@ function TicketPage() {
                 </div>
               </div>
             )}
-            {refundValidator(ticketView) && !ticketView.ticket.refunded && (
-              <div
-                className=" border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"
-                onClick={() => {
-                  getRefundHandler(ticketView);
-                }}
-              >
-                Get Refund
-              </div>
-            )}
+            {/*{refundValidator(ticketView) && !ticketView.ticket.refunded && (*/}
+            {/*  <div*/}
+            {/*    className=" border-2 border-white bg-blue-500 bg-opacity-75 text-2xl rounded-xl p-2 mt-4 text-center hover:bg-blue-700 hover:bg-opacity-75 cursor-pointer"*/}
+            {/*    onClick={() => {*/}
+            {/*      getRefundHandler(ticketView);*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    Get Refund*/}
+            {/*  </div>*/}
+            {/*)}*/}
             {travelCompleteValidator(ticketView) &&
               !ticketView.ticket.refunded && (
                 <div className=" flex justify-between">

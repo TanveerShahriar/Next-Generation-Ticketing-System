@@ -18,6 +18,10 @@ class NameService {
   getAllUser() {
     return axios.get(USER_API_BASE_URL + "/getAllUser");
   }
+
+  getAllDriver() {
+        return axios.get(USER_API_BASE_URL + "/getAllDriver");
+  }
 }
 
 export default new NameService();

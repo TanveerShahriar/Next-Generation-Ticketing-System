@@ -42,6 +42,14 @@ function Navbar() {
                 Admin Panel
               </button>
             )}
+            {userType === "admin" && (
+                <Link
+                    to={"/statistics"}
+                    className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
+                >
+                  Statistics
+                </Link>
+            )}
             {userType === "busDriver" && (
               <Link
                 to={"/upcomingRide"}
@@ -56,6 +64,12 @@ function Navbar() {
             >
               Tickets
             </button>
+            <Link
+                to="/viewReview"
+              className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
+            >
+              View Reviews
+            </Link>
             <button
               className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
               onClick={handleLogout}

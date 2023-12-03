@@ -14,4 +14,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface BusReviewRepo extends JpaRepository<BusReview, Long> {
     List<BusReview> findAllByTicketAndReviewerAndBus(Ticket ticket, User user, Bus bus);
+
+    List<BusReview> findAllByBus(Bus bus);
 }

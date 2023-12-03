@@ -10,6 +10,14 @@ class BusScheduleService {
   getMyRides(userId: number) {
     return axios.get(USER_API_BASE_URL + "/" + userId);
   }
+
+  totalUpcomingRides() {
+    return axios.get(USER_API_BASE_URL + "/totalUpcomingRide");
+  }
+
+  totalCompletedRides() {
+    return axios.get(USER_API_BASE_URL + "/totalCompletedRide");
+  }
 }
 
 export default new BusScheduleService();

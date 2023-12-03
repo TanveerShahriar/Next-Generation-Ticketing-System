@@ -11,6 +11,10 @@ class BusReviewService {
         return axios.post(USER_API_BASE_URL + "/checkReview", ticketView);
     }
 
+    getBusReview(bus: any) {
+        return axios.post(USER_API_BASE_URL + "/getBusReview", bus);
+    }
+
 }
 
 export default new BusReviewService();
