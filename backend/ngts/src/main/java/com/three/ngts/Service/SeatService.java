@@ -33,7 +33,7 @@ public class SeatService {
                 totalSold++;
             }
         }
-        Double seatOccupancy =  ((double) totalSold / totalSeat)*100;
+        Double seatOccupancy = ((double) totalSold / totalSeat) * 100;
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String formattedValue = decimalFormat.format(seatOccupancy);
         return Double.parseDouble(formattedValue);

@@ -2,9 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import "./adminPanel.css";
 import { UserToken } from "../../Token/UserToken";
 import { useNavigate } from "react-router-dom";
-import AuthService from "../../Service/AuthService";
-import User from "../../Entity/User";
-import UserService from "../../Service/UserService";
 import Bus from "../../Entity/Bus";
 import BusService from "../../Service/BusService";
 
@@ -64,6 +61,7 @@ function DeleteBus() {
       <div id="main-body" className="w-1/3 bg-black bg-opacity-75 p-6 rounded">
         <label className="block text-white">Select a Bus:</label>
         <select
+          aria-label="Select a Bus"
           value={selectedOption}
           onChange={handleOptionChange}
           className="w-full p-2 mt-2 border rounded"

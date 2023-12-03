@@ -31,12 +31,6 @@ public class TicketService {
     @Autowired
     private RouteDistrictRepo routeDistrictRepo;
 
-    @Autowired
-    private BusReviewRepo busReviewRepo;
-
-    @Autowired
-    private DriverReviewRepo driverReviewRepo;
-
     @PostMapping("/tickets/insert")
     public Ticket insert(@RequestBody Ticket ticket) {
         return ticketRepo.save(ticket);
@@ -80,34 +74,34 @@ public class TicketService {
         return getMyTickets(user.getUserId().toString());
     }
 
-//@PostMapping("/tickets/getRefund")
-//public List<TicketView> getRefund(@RequestBody TicketView ticketView) {
-//    List<Seat> seats = ticketView.getSeats();
-//    for (Seat seat : seats) {
-//        seat.setTicket(null);
-//        seatRepo.save(seat);
-//    }
-//    for(BusReview busReview: ticketView.getTicket().getBusReviews()){
-//        busReview.setTicket(null);
-//        busReviewRepo.save(busReview);
-//    }
-//    for(DriverReview driverReview: ticketView.getTicket().getDriverReviews()){
-//        driverReview.setTicket(null);
-//        driverReviewRepo.save(driverReview);
-//    }
-//    User user = ticketView.getTicket().getUser();
-//    Ticket ticket = ticketView.getTicket();
-//    ticket.setRefunded(true);
-//    ticketRepo.save(ticket);
-//    return getMyTickets(user.getUserId().toString());
-//}
+    // @PostMapping("/tickets/getRefund")
+    // public List<TicketView> getRefund(@RequestBody TicketView ticketView) {
+    // List<Seat> seats = ticketView.getSeats();
+    // for (Seat seat : seats) {
+    // seat.setTicket(null);
+    // seatRepo.save(seat);
+    // }
+    // for(BusReview busReview: ticketView.getTicket().getBusReviews()){
+    // busReview.setTicket(null);
+    // busReviewRepo.save(busReview);
+    // }
+    // for(DriverReview driverReview: ticketView.getTicket().getDriverReviews()){
+    // driverReview.setTicket(null);
+    // driverReviewRepo.save(driverReview);
+    // }
+    // User user = ticketView.getTicket().getUser();
+    // Ticket ticket = ticketView.getTicket();
+    // ticket.setRefunded(true);
+    // ticketRepo.save(ticket);
+    // return getMyTickets(user.getUserId().toString());
+    // }
 
     @GetMapping("/tickets/totalTicket")
-    public Integer totalTicket(){
+    public Integer totalTicket() {
         List<Ticket> tickets = ticketRepo.findAll();
         Integer totalTicket = 0;
-        for(Ticket ticket : tickets){
-            if(!ticket.isRefunded()){
+        for (Ticket ticket : tickets) {
+            if (!ticket.isRefunded()) {
                 totalTicket++;
             }
         }

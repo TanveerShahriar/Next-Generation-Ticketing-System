@@ -96,6 +96,7 @@ function UpdateDriverLicence() {
             Select a Driver
           </label>
           <select
+            aria-label="Select a Driver"
             value={selectedOption}
             onChange={handleOptionChange}
             className={`block appearance-none w-full bg-gray-200 border ${
@@ -119,6 +120,7 @@ function UpdateDriverLicence() {
             License Expiration Date
           </label>
           <input
+            aria-label="Select a Date"
             type="date"
             value={expirationDate}
             onChange={handleDateChange}

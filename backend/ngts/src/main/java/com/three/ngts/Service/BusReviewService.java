@@ -18,13 +18,14 @@ public class BusReviewService {
     private BusReviewRepo busReviewRepo;
 
     @PostMapping("/busReviews/insert")
-    public BusReview insert(@RequestBody BusReview busReview){
+    public BusReview insert(@RequestBody BusReview busReview) {
         return busReviewRepo.save(busReview);
     }
 
     @PostMapping("/busReviews/checkReview")
-    public boolean checkReview(@RequestBody TicketView ticketView){
-        List<BusReview> busReviews = busReviewRepo.findAllByTicketAndReviewerAndBus(ticketView.getTicket(), ticketView.getTicket().getUser(), ticketView.getBusSchedule().getBus());
+    public boolean checkReview(@RequestBody TicketView ticketView) {
+        List<BusReview> busReviews = busReviewRepo.findAllByTicketAndReviewerAndBus(ticketView.getTicket(),
+                ticketView.getTicket().getUser(), ticketView.getBusSchedule().getBus());
         return !busReviews.isEmpty();
     }
 

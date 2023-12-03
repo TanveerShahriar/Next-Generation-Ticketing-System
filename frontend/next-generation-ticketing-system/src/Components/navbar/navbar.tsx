@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserToken } from "../../Token/UserToken";
 
@@ -43,12 +43,12 @@ function Navbar() {
               </button>
             )}
             {userType === "admin" && (
-                <Link
-                    to={"/statistics"}
-                    className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
-                >
-                  Statistics
-                </Link>
+              <Link
+                to={"/statistics"}
+                className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
+              >
+                Statistics
+              </Link>
             )}
             {userType === "busDriver" && (
               <Link
@@ -65,7 +65,7 @@ function Navbar() {
               Tickets
             </button>
             <Link
-                to="/viewReview"
+              to="/viewReview"
               className="text-white p-1 bg-blue-500 hover:bg-blue-700 rounded-md me-1"
             >
               View Reviews

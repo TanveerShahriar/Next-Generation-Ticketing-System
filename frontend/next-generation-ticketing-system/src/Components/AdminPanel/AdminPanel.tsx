@@ -35,8 +35,8 @@ function AdminPanel() {
     <div className="flex justify-center items-center h-screen background_image_admin">
       <div className="bg-white bg-opacity-25 rounded-lg p-6">
         <button
-            className="w-full block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
-            onClick={handleAddNewDriver}
+          className="w-full block bg-black hover:bg-gray-900 text-white border-2 border-white text-center py-4 px-20 rounded-lg font-bold"
+          onClick={handleAddNewDriver}
         >
           Add Driver
         </button>

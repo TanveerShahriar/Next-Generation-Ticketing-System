@@ -1,4 +1,5 @@
 package com.three.ngts.Entity.CustomEntity;
+
 import com.three.ngts.Entity.BusSchedule;
 import com.three.ngts.Entity.RouteDistrict;
 import com.three.ngts.Entity.Seat;

@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .background_image_bus_review {
@@ -13,6 +12,6 @@
   background-position: center;
   height: 100vh;
   width: 100%;
+  position: fixed;
   z-index: -1;
-  background-attachment: fixed;
 }

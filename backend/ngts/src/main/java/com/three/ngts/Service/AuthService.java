@@ -44,8 +44,8 @@ public class AuthService {
     }
 
     @GetMapping("/auths/totalPassenger")
-    public Integer totalPassenger(){
-        List<Auth> auths =  authRepo.findAll();
+    public Integer totalPassenger() {
+        List<Auth> auths = authRepo.findAll();
         Integer count = 0;
         for (Auth auth : auths) {
             if (auth.getType().equals("general")) {

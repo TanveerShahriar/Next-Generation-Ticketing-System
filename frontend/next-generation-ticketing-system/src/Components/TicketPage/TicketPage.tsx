@@ -108,7 +108,11 @@ const DriverNameComponent = ({ user }: { user: User }) => {
     });
   }, [user]);
 
-  return <span>{driverName} [{user.email}]</span>;
+  return (
+    <span>
+      {driverName} [{user.email}]
+    </span>
+  );
 };
 
 function TicketPage() {

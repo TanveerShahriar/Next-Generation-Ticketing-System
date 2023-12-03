@@ -50,7 +50,7 @@ public class UserService {
     }
 
     @GetMapping("/users/totalUser")
-    public Integer totalUser(){
+    public Integer totalUser() {
         return userRepo.findAll().size();
     }
 }

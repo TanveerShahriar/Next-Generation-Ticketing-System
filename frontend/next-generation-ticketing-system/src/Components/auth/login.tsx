@@ -3,7 +3,6 @@ import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { UserToken } from "../../Token/UserToken";
 import UserService from "../../Service/UserService";
-import AuthService from "../../Service/AuthService";
 
 function Login() {
   const [email, setEmail] = useState("");

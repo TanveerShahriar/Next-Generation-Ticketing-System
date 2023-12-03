@@ -26,7 +26,7 @@ public class DriverService {
     }
 
     @GetMapping("/drivers/totalDriver")
-    public Integer totalDriver(){
+    public Integer totalDriver() {
         return driverRepo.findAll().size();
     }
 

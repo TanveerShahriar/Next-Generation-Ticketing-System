@@ -62,6 +62,7 @@ function DeleteDriver() {
       <div id="main-body" className="w-1/3 bg-black bg-opacity-75 p-6 rounded">
         <label className="block text-white">Select a Driver:</label>
         <select
+          aria-label="Select a Driver"
           value={selectedOption}
           onChange={handleOptionChange}
           className="w-full p-2 mt-2 border rounded"

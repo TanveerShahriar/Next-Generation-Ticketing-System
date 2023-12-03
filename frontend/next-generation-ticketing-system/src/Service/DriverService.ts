@@ -12,8 +12,8 @@ class DriverService {
   }
 
   totalDriver() {
-        return axios.get(USER_API_BASE_URL + "/totalDriver");
-    }
+    return axios.get(USER_API_BASE_URL + "/totalDriver");
+  }
 }
 
 export default new DriverService();

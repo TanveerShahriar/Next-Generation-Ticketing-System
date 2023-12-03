@@ -20,7 +20,7 @@ class NameService {
   }
 
   getAllDriver() {
-        return axios.get(USER_API_BASE_URL + "/getAllDriver");
+    return axios.get(USER_API_BASE_URL + "/getAllDriver");
   }
 }
 
