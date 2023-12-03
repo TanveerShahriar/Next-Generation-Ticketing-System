@@ -17,6 +17,10 @@ class AuthService {
   totalPassenger() {
     return axios.get(USER_API_BASE_URL + "/totalPassenger");
   }
+
+  deleteDriver(user_id: any) {
+    return axios.delete(`http://localhost:8080/api/auths/` + user_id);
+  }
 }
 
 export default new AuthService();

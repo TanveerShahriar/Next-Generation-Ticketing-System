@@ -13,4 +13,6 @@ import java.util.List;
 public interface AuthRepo extends JpaRepository<Auth, Long> {
 
     List<Auth> findByUser(User user);
+
+    void deleteByUser(User user);
 }

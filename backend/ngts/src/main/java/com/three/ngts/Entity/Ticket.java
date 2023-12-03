@@ -31,18 +31,18 @@ public class Ticket {
     private boolean refunded;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ticket")
     private List<Seat> seats;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ticket")
     private List<TicketAddress> ticketAddresses;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ticket")
     private List<BusReview> busReviews;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ticket")
     private List<DriverReview> driverReviews;
 }

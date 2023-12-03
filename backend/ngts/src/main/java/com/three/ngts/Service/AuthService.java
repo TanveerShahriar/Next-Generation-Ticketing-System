@@ -3,11 +3,15 @@ package com.three.ngts.Service;
 import com.three.ngts.Entity.Auth;
 import com.three.ngts.Entity.User;
 import com.three.ngts.Repo.AuthRepo;
+import com.three.ngts.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -16,6 +20,9 @@ public class AuthService {
 
     @Autowired
     private AuthRepo authRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @PostMapping("/auths/insert")
     public Auth insert(@RequestBody Auth auth) {
@@ -53,5 +60,23 @@ public class AuthService {
             }
         }
         return count;
+    }
+
+    @DeleteMapping("/auths/{userId}")
+    public ResponseEntity<String> deleteDriver(@PathVariable Long userId) {
+        Optional<User> optionalUser = userRepo.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            List<Auth> auths = authRepo.findByUser(optionalUser.get());
+            for (Auth auth : auths) {
+                if (auth.getType().equals("busDriver")) {
+                    auth.setType("general");
+                    authRepo.save(auth);
+                }
+            }
+            return ResponseEntity.ok("User deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
     }
 }

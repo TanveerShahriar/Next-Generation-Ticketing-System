@@ -40,7 +40,7 @@ function DeleteDriver() {
       return;
     }
 
-    UserService.deleteUser(selectedOption).then((res) => {
+    AuthService.deleteDriver(selectedOption).then((res) => {
       setSuccessMessage(`Successfully deleted Driver`);
 
       setSelectedOption("");

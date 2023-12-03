@@ -26,10 +26,10 @@ public class Bus {
     private Long busCapacity;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bus")
     private List<BusSchedule> busSchedules;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bus")
     private List<BusReview> busReviews;
 }

@@ -138,12 +138,12 @@ function AddBus() {
             >
               Add Bus
             </button>
-            <Link
-              to={"/deleteBus"}
-              className=" ms-4 bg-red-700 text-white p-2 rounded hover:bg-red-900"
-            >
-              Delete Bus
-            </Link>
+            {/*<Link*/}
+            {/*  to={"/deleteBus"}*/}
+            {/*  className=" ms-4 bg-red-700 text-white p-2 rounded hover:bg-red-900"*/}
+            {/*>*/}
+            {/*  Delete Bus*/}
+            {/*</Link>*/}
           </div>
           {successMsg && <p className="text-green-500 mt-4">{successMsg}</p>}
         </div>
